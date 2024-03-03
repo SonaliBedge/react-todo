@@ -31,9 +31,9 @@ function App() {
       <hr />
       <ul>
         {
-          todoList.map(function(item){
-            return <li>{item.id} : {item.title}</li>
-          })
+          todoList.map((item) => (
+             <li key={item.id}>{item.title}</li>
+          ))
         }
       </ul>
     </div>
