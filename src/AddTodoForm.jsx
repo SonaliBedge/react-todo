@@ -1,6 +1,7 @@
 function AddTodoForm() {
     return (
         <div>
+            <hr />
             <h1>Form</h1>
             <hr />
             <form>
@@ -8,7 +9,8 @@ function AddTodoForm() {
                     Title  :   <input type="text" name="name" id="todoTitle"/>
                     
                 </label></span>         
-                <br />
+                <hr />
+                
                 <input type="submit" value="Add" />
             </form>
         </div>
