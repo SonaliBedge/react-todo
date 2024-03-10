@@ -1,45 +1,25 @@
-import * as React from 'react';
-import './App.css'
-
-const todoList = [
-  {
-    id : 1,
-    title : 'Hello React',
-  },
-  {
-    id : 2,
-    title : 'Project Setup',
-  },
-  {
-    id : 3,
-    title : 'React Components',
-  },
-  {
-    id : 4,
-    title : 'JSX in React',
-  },
-  {
-    id : 5,
-    title : 'Lists in React',
-  },
-];
+import * as React from "react";
+import TodoList from "./TodoList";
+import AddTodoForm from "./AddTodoForm";
+import "./App.css";
 
 function App() {
+  const [newTodo, setNewTodo] = React.useState("");
+  const handleAddTodo = (todo) => {
+    // console.log(todo.target.name);
+    
+    setNewTodo(todo);
+  };
+
   return (
     <div>
-      <h1>Todo List</h1>
-
       <hr />
-      <ul>
-        {
-          todoList.map((item) => (
-             <li key={item.id}>{item.title}</li>
-          ))
-        }
-      </ul>
+      <TodoList />
+      <hr />
+      <AddTodoForm onAddTodo = {handleAddTodo} />
+      <p>New Todo : {newTodo}</p>
     </div>
   );
 }
 
 export default App;
-
