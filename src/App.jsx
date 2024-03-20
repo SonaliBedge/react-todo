@@ -1,24 +1,27 @@
-import * as React from 'react';
 
-import TodoList from './TodoList';
+import * as React from "react";
+import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
+import "./App.css";
 
-import './App.css'
+function App() {
+  const [newTodo, setNewTodo] = React.useState("");
+  const handleAddTodo = (todo) => {
+    // console.log(todo.target.name);
+    
+    setNewTodo(todo);
+  };
 
-function  App(){
   return (
     <div>
-      
       <hr />
-
       <TodoList />
       <hr />
-      <AddTodoForm />
+      <AddTodoForm onAddTodo = {handleAddTodo} />
+      <p>New Todo : {newTodo}</p>
+    </div>
 
-     </div>
   );
 }
 
 export default App;
-
-
