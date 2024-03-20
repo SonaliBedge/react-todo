@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
@@ -19,6 +20,7 @@ function App() {
       <AddTodoForm onAddTodo = {handleAddTodo} />
       <p>New Todo : {newTodo}</p>
     </div>
+
   );
 }
 
