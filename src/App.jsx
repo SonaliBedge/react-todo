@@ -5,20 +5,17 @@ import AddTodoForm from "./AddTodoForm";
 import "./App.css";
 
 function App() {
-  const [newTodo, setNewTodo] = React.useState("");
-  const handleAddTodo = (todo) => {
-    // console.log(todo.target.name);
-    
-    setNewTodo(todo);
+  const [todoList, setTodoList] = React.useState([]); // Create new state variable named todoList with setter setTodoList and default value of an empty Array
+  const addTodo = (newTodo) => {
+    setTodoList([...todoList, newTodo]);
   };
-
   return (
     <div>
       <hr />
-      <TodoList />
+      <TodoList todoList={todoList} />{" "}
+      {/* Pass todoList state as a prop named todoList to the TodoList component*/}
       <hr />
-      <AddTodoForm onAddTodo = {handleAddTodo} />
-      <p>New Todo : {newTodo}</p>
+      <AddTodoForm addTodo={addTodo} />
     </div>
 
   );
