@@ -23,11 +23,9 @@ function App() {
   };
   return (
     <>
-      <div>
-        <hr />
-        <TodoList todoList={todoList} onRemoveTodo={removeTodo} /> <hr />
-        <AddTodoForm addTodo={addTodo} />
-      </div>
+      <hr />
+      <TodoList todoList={todoList} onRemoveTodo={removeTodo} /> <hr />
+      <AddTodoForm addTodo={addTodo} />
     </>
   );
 }

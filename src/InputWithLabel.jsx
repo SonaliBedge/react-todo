@@ -1,13 +1,13 @@
 // Created Reusable Input with Label Component
 // Added Auto-Focus to Input
 
-import * as React from "react";
-
+import { useRef, useEffect } from "react";
 function InputWithLabel(props) {
   const { isFocused, children, type, name, id, todoTitle, handleTitleChange } =
     props;
-  const inputRef = React.useRef();
-  React.useEffect(() => {
+
+  const inputRef = useRef();
+  useEffect(() => {
     if (isFocused && inputRef.current) {
       inputRef.current.focus();
     }
