@@ -34,7 +34,22 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+/* Add space between the Remove button and anchor tag */
+span:nth-child(5) {
+  margin-left: 10px; /* Adjust as needed */
+}
 
+.custom-button {
+  background-color: rgb(18, 18, 60);
+  color: white;
+  border: none;
+  border-radius:  15%;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.custom-button:hover {
+  background-color: #3c2147;
+}
 button {
   border-radius: 8px;
   border: 1px solid transparent;
