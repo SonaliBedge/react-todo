@@ -1,8 +1,10 @@
+//Refacor Input with Label to use Component Composition
 
 import * as React from "react";
+import InputWithLabel from "./InputWithLabel";
 
 function AddTodoForm({ addTodo }) {
-  const [todoTitle, setTodoTitle] = React.useState(""); //Creating new state variable named todoTitle with setter setTodoTitle
+  const [todoTitle, setTodoTitle] = React.useState("");
   const handleTitleChange = (event) => {
     const newTodoTitle = event.target.value;
     setTodoTitle(newTodoTitle);
@@ -13,11 +15,11 @@ function AddTodoForm({ addTodo }) {
     console.log(todoTitle);
     const newTodo = {
       title: todoTitle,
-      id: Date.now(), // Generate a unique identifier using Date.now()
+      id: Date.now(),
     };
     addTodo(newTodo);
     console.log(newTodo);
-    setTodoTitle(""); // Resetting todoTitle state to an empty string
+    setTodoTitle("");
   };
 
   return (
@@ -27,16 +29,16 @@ function AddTodoForm({ addTodo }) {
       <hr />
       <form onSubmit={handleAddTodo}>
         <span>
-          <label htmlFor="todoTitle">
-            Title :{" "}
-            <input
-              type="text"
-              name="title"
-              id="todoTitle"
-              value={todoTitle}
-              onChange={handleTitleChange}
-            />
-          </label>
+          <InputWithLabel
+            type="text"
+            name="title"
+            id="todoTitle"
+            isFocused
+            todoTitle={todoTitle}
+            handleTitleChange={handleTitleChange}
+          >
+            <strong>Title:</strong>
+          </InputWithLabel>
         </span>
         <hr />
         <input type="submit" value="Add" />
@@ -45,4 +47,3 @@ function AddTodoForm({ addTodo }) {
   );
 }
 export default AddTodoForm;
- 
