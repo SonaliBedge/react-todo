@@ -3,6 +3,7 @@ import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
 import "./App.css";
 
+const todoListStorageKey = "savedTodoList";
 function App() {
   const [todoList, setTodoList] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -17,7 +18,8 @@ function App() {
         () =>
           resolve({
             data: {
-              todoList: JSON.parse(localStorage.getItem("savedTodoList")) || [],
+              todoList:
+                JSON.parse(localStorage.getItem(todoListStorageKey)) || [],
             },
           }),
         2000
@@ -29,9 +31,8 @@ function App() {
   }, []);
 
   React.useEffect(() => {
-    if (isLoading === false) {
-      localStorage.setItem("savedTodoList", JSON.stringify(todoList));
-      const savedTodoList1 = JSON.parse(localStorage.getItem("savedTodoList"));
+    if (!isLoading) {
+      localStorage.setItem(todoListStorageKey, JSON.stringify(todoList));
     }
   }, [todoList, isLoading]);
 
@@ -48,7 +49,8 @@ function App() {
         <p>Loading...</p>
       ) : (
         <>
-          <TodoList todoList={todoList} onRemoveTodo={removeTodo} /> <hr />
+          <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
+          <hr />
         </>
       )}
       <AddTodoForm addTodo={addTodo} />
