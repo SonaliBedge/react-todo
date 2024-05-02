@@ -11,23 +11,41 @@ function App() {
   const addTodo = (newTodo) => {
     setTodoList([...todoList, newTodo]);
   };
-  React.useEffect(() => {
-    setIsLoading(true);
-    new Promise((resolve) => {
-      setTimeout(
-        () =>
-          resolve({
-            data: {
-              todoList:
-                JSON.parse(localStorage.getItem(todoListStorageKey)) || [],
-            },
-          }),
-        2000
-      );
-    }).then((result) => {
-      setTodoList(result.data.todoList);
+  const url = `https://api.airtable.com/v0/${
+    import.meta.env.VITE_AIRTABLE_BASE_ID
+  }/${import.meta.env.VITE_TABLE_NAME}`;
+
+  const fetchData = async () => {
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
+      },
+    };
+
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        const message = `Error has ocurred: ${response.status}`;
+        throw new Error(message);
+      }
+      const data = await response.json();
+
+      const todos = data.records.map((todo) => {
+        const newtodos = {
+          id: todo.id,
+          title: todo.fields.Title,
+        };
+        return newtodos;
+      });
+      setTodoList(todos);
       setIsLoading(false);
-    });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  React.useEffect(() => {
+    fetchData();
   }, []);
 
   React.useEffect(() => {
