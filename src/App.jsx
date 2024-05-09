@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
-// import axios from 'axios';
+import { useState, useEffect } from "react";
 import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
 import "./App.css";
-
-const todoListStorageKey = "savedTodoList";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   const [todoList, setTodoList] = useState([]);
@@ -91,18 +89,27 @@ function App() {
   };
 
   return (
-    <>
-      <hr />
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
-          <hr />
-        </>
-      )}
-      <AddTodoForm addTodo={addTodo} />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={
+          <>
+            <hr />
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              <>
+                <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
+                <hr />
+              </>
+            )}
+            <AddTodoForm addTodo={addTodo} />
+          </>
+        } />
+        <Route path="/new" element={
+          <h1>New Todo List </h1>
+        }/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
