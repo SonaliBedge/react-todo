@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
-// import axios from 'axios'; Import BrowserRouter, Routes, and Route from react-router-dom
+import { useState, useEffect } from "react";
 import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-const todoListStorageKey = "savedTodoList";
 
 function App() {
   const [todoList, setTodoList] = useState([]);
