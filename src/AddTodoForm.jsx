@@ -24,10 +24,8 @@ function AddTodoForm({ addTodo }) {
   };
 
   return (
-    <div>
-      {/* <hr /> */}
-      <h3>Add New Todo List</h3>
-      {/* <hr /> */}
+    <div>      
+      <h3>Add New Todo List</h3>      
       <form onSubmit={handleAddTodo}>
         <span>
           <InputWithLabel

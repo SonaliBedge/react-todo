@@ -38,9 +38,8 @@
 }
 .TitleFont {
   font-size: 3.2em;
-  line-height: 1.1;
-    /* font-size: 26; */
-    font-family: 'Honk', Inter, system-ui;
+  line-height: 1.1;   
+  font-family: 'Honk', Inter, system-ui;
 }
 .FormText {  
   color: brown;

@@ -94,14 +94,12 @@ function App() {
         <Route
           path="/"
           element={
-            <>
-              {/* <hr /> */}
+            <>              
               {isLoading ? (
                 <p>Loading...</p>
               ) : (
                 <>
-                  <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
-                  {/* <hr /> */}
+                  <TodoList todoList={todoList} onRemoveTodo={removeTodo} />                  
                 </>
               )}
               <AddTodoForm addTodo={addTodo} />
