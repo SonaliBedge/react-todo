@@ -1,0 +1,98 @@
+.Container {
+  border: 2px solid #ccc; 
+  padding: 20px; 
+}
+.ListItem {
+    margin-bottom: 10px;    
+}
+.ListContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ListLink {
+    text-decoration: none;
+    color: #333;
+    font-family: 'Patrick Hand', Inter, system-ui;
+    font-size: 20px;
+    width: 200px;
+}
+.ListLink:hover {
+    text-decoration: underline;
+    color: brown;
+}
+.ListButton {   
+    background-color: #fc583b;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.ListButton:hover {
+    text-decoration: underline;
+    color: rgb(27, 21, 55);
+}
+.ListHr {
+    border: none;
+    border-top: 1px solid #ccc;
+}
+.TitleFont {
+  font-size: 3.2em;
+  line-height: 1.1;
+    /* font-size: 26; */
+    font-family: 'Honk', Inter, system-ui;
+}
+.FormText {  
+  color: brown;
+}
+.FormLink {
+  display: flex; 
+  align-items: center;
+  color: #9e1e1e;
+  font-family: 'Patrick Hand', Inter, system-ui;
+  font-size: 20px;
+  border: 2px solid #ccc; 
+  padding: 20px; 
+}
+
+.FormLink label {
+  width: 100px; 
+  margin-right: 10px; 
+}
+
+.FormLink input {
+  flex: 1; 
+  background-color: #6F1F25;
+  color: rgb(245, 239, 239);
+}
+/* Media queries for responsiveness */
+
+/* Styles for devices with a maximum width of 758px */
+@media (max-width: 758px) {
+    .ListContainer {
+      flex-direction: column; /* Display items vertically */
+  }
+  .FormLink {
+    flex-direction: column; 
+    align-items: flex-start; /* Align items to the start */
+  }
+
+  .FormLink label {
+    margin-bottom: 5px; /* Add space between label and input */
+  }
+}
+  
+  /* Styles for devices with a maximum width of 576px (mobile devices) */
+  @media (max-width: 576px) {
+    .ListButton {
+      font-size: 14px; /* Reduce button font size for smaller screens */
+      padding: 3px 6px; /* Adjust button padding */
+  }
+  .FormLink label {
+    width: 80px; /* Reduce label width for smaller screens */
+  }
+
+  .FormLink input {
+    font-size: 16px; 
+  }
+}

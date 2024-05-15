@@ -1,10 +1,11 @@
 import * as React from "react";
 import TodoListItem from "./TodoListItem";
+import style from "./TodoListItem.module.css";
 
 function TodoList({ todoList, onRemoveTodo }) {
   return (
-    <div>
-      <h1>Todo List</h1>
+    <div className={style.Container}>
+      <h1 className={style.TitleFont}>Todo List</h1>
       <hr />
       <ul>
         {todoList.map((todo) => (

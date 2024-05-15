@@ -1,7 +1,6 @@
-// Created Reusable Input with Label Component
-// Added Auto-Focus to Input
-
+import style from "./TodoListItem.module.css";
 import { useRef, useEffect } from "react";
+
 function InputWithLabel(props) {
   const { isFocused, children, type, name, id, todoTitle, handleTitleChange } =
     props;
@@ -15,6 +14,7 @@ function InputWithLabel(props) {
 
   return (
     <>
+    <div className={ style.FormLink}>
       <label htmlFor={id}>{children} </label>
 
       <input
@@ -25,6 +25,7 @@ function InputWithLabel(props) {
         value={todoTitle}
         onChange={handleTitleChange}
       />
+      </div>
     </>
   );
 }
