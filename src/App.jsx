@@ -91,23 +91,22 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={
-          <>
-            <hr />
-            {isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              <>
-                <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
-                <hr />
-              </>
-            )}
-            <AddTodoForm addTodo={addTodo} />
-          </>
-        } />
-        <Route path="/new" element={
-          <h1>New Todo List </h1>
-        }/>
+        <Route
+          path="/"
+          element={
+            <>              
+              {isLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <>
+                  <TodoList todoList={todoList} onRemoveTodo={removeTodo} />                  
+                </>
+              )}
+              <AddTodoForm addTodo={addTodo} />
+            </>
+          }
+        />
+        <Route path="/new" element={<h1>New Todo List </h1>} />
       </Routes>
     </BrowserRouter>
   );
