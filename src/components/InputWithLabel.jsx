@@ -1,9 +1,10 @@
 import style from "./TodoListItem.module.css";
 import { useRef, useEffect } from "react";
+import PropTypes from "prop-types"
 
-function InputWithLabel(props) {
-  const { isFocused, children, type, name, id, todoTitle, handleTitleChange } =
-    props;
+function InputWithLabel({ isFocused, children, type, name, id, todoTitle, handleTitleChange }) {
+  // const { isFocused, children, type, name, id, todoTitle, handleTitleChange } =
+  //   props;
 
   const inputRef = useRef();
   useEffect(() => {
@@ -29,5 +30,13 @@ function InputWithLabel(props) {
     </>
   );
 }
-
+InputWithLabel.propTypes = {
+  isFocused: PropTypes.bool,
+  children: PropTypes.string,
+  type: PropTypes.string,
+  name: PropTypes.string,
+  id: PropTypes.string,
+  todoTitle: PropTypes.string,
+  handleTitleChange: PropTypes.func
+};
 export default InputWithLabel;
