@@ -9,20 +9,19 @@ function TodoListItem({ todo, onRemoveTodo }) {
   };
 
   return (
-    <li
-      style={{
-        textAlign: "left",
-      }}
-    >
+    <li  className={style.ListLink}>
+       <div className={style.ListContainer}>
       <span>
-        <a href={url}>{title}</a>
+        <a href={url} className={style.ListLink}>{title}</a>
       </span>
-      <span>
-        <button type="button" onClick={handleRemoveTodo}>
+      <span >
+        <button className={style.ListButton} type="button" onClick={handleRemoveTodo}>
           Remove
         </button>
       </span>
-      <hr />
+     
+      </div>
+      <hr className={style.ListHr} />
     </li>
   );
 }

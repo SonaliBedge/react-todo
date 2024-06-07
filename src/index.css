@@ -26,7 +26,6 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
- 
   min-width: 320px;
   min-height: 100vh;
   background-color:rgb(252, 250, 252);
@@ -52,13 +51,9 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-   align-items: left;
-  /* margin-right: 0px !important; */
-  
 }
 button:hover {
   border-color: #646cff;
-  color: aqua;
 }
 button:focus,
 button:focus-visible {

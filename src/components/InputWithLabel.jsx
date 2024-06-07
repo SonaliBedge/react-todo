@@ -1,11 +1,16 @@
 import style from "./TodoListItem.module.css";
 import { useRef, useEffect } from "react";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 
-function InputWithLabel({ isFocused, children, type, name, id, todoTitle, handleTitleChange }) {
-  // const { isFocused, children, type, name, id, todoTitle, handleTitleChange } =
-  //   props;
-
+function InputWithLabel({
+  isFocused,
+  children,
+  type,
+  name,
+  id,
+  todoTitle,
+  handleTitleChange,
+}) {
   const inputRef = useRef();
   useEffect(() => {
     if (isFocused && inputRef.current) {
@@ -15,17 +20,17 @@ function InputWithLabel({ isFocused, children, type, name, id, todoTitle, handle
 
   return (
     <>
-    <div className={ style.FormLink}>
-      <label htmlFor={id}>{children} </label>
+      <div className={style.FormLink}>
+        <label htmlFor={id}>{children} </label>
 
-      <input
-        ref={inputRef}
-        type={type}
-        name={name}
-        id={id}
-        value={todoTitle}
-        onChange={handleTitleChange}
-      />
+        <input
+          ref={inputRef}
+          type={type}
+          name={name}
+          id={id}
+          value={todoTitle}
+          onChange={handleTitleChange}
+        />
       </div>
     </>
   );
@@ -37,6 +42,6 @@ InputWithLabel.propTypes = {
   name: PropTypes.string,
   id: PropTypes.string,
   todoTitle: PropTypes.string,
-  handleTitleChange: PropTypes.func
+  handleTitleChange: PropTypes.func,
 };
 export default InputWithLabel;
