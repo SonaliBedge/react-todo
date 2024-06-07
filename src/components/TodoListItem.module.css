@@ -15,7 +15,7 @@
     color: #333;
     font-family: 'Patrick Hand', Inter, system-ui;
     font-size: 20px;
-    width: 200px;
+    width: 440px;
 }
 .ListLink:hover {
     text-decoration: underline;
@@ -75,7 +75,9 @@
     flex-direction: column; 
     align-items: flex-start; /* Align items to the start */
   }
-
+.ListLink {
+  width: 150px;
+}
   .FormLink label {
     margin-bottom: 5px; /* Add space between label and input */
   }
