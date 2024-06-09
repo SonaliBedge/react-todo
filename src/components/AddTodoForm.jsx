@@ -3,8 +3,10 @@
 import * as React from "react";
 import InputWithLabel from "./InputWithLabel";
 import style from "./TodoListItem.module.css";
+import PropTypes from "prop-types";
 
 function AddTodoForm({ addTodo }) {
+  
   const [todoTitle, setTodoTitle] = React.useState("");
   const handleTitleChange = (event) => {
     const newTodoTitle = event.target.value;
@@ -24,8 +26,8 @@ function AddTodoForm({ addTodo }) {
   };
 
   return (
-    <div>      
-      <h3>Add New Todo List</h3>      
+    <div>
+      <h3>Add New Todo List</h3>
       <form onSubmit={handleAddTodo}>
         <span>
           <InputWithLabel
@@ -45,4 +47,7 @@ function AddTodoForm({ addTodo }) {
     </div>
   );
 }
+AddTodoForm.propTypes = {
+  addTodo: PropTypes.func,
+};
 export default AddTodoForm;
