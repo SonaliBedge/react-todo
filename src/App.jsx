@@ -68,6 +68,7 @@ function App() {
         body: JSON.stringify({
           fields: {
             Title: newTodo.title,
+            CompletedAt: newTodo.CompletedAt,
           },
         }),
       };
@@ -78,17 +79,24 @@ function App() {
 
       const response = await fetch(url, options);
       if (!response.ok) {
-        const message = `Error has occurred: ${response.status}`;
-        throw new Error(message);
+        throw new Error(`Error adding todo: ${response.status}`);        
       }
       const data = await response.json();
 
       const addTodo = {
         id: data.id,
         title: data.fields.Title,
+        CompletedAt: data.fields.CompletedAt,
       };
 
-      setTodoList([...todoList, addTodo]);
+      // setTodoList([...todoList, addTodo]);
+      setTodoList((todoList) => {
+        const updatedList = [...todoList, addTodo];
+        updatedList.sort((a, b) => {
+          return new Date(a.CompletedAt) - new Date(b.CompletedAt);
+        });
+        return updatedList;
+      });
     } catch (error) {
       console.error("Error adding todo:", error.message);
     }
@@ -101,9 +109,31 @@ function App() {
   const toggleSortBy = (sortByValue) => {
     setSortBy(sortByValue);
   };  
-  const removeTodo = (id) => {
-    const newTodoList = todoList.filter((todo) => id !== todo.id);
-    setTodoList(newTodoList);
+  const removeTodo = async (id) => {
+    try {
+      const options = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
+        },
+      };
+
+      const url = `https://api.airtable.com/v0/${
+        import.meta.env.VITE_AIRTABLE_BASE_ID
+      }/${import.meta.env.VITE_TABLE_NAME}/${id}`;
+
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(`Error deleting todo: ${response.status}`);
+      }
+
+      // Update todoList state by filtering out the removed todo
+    setTodoList(todoList.filter((todo) => id !== todo.id));
+    } catch (error) {
+      console.error("Error deleting todo:", error.message);
+    }
+    
   };
 
   return (
