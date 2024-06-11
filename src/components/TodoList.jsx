@@ -5,25 +5,37 @@ import PropTypes from "prop-types";
 function TodoList({
   todoList,
   onRemoveTodo,
-  onClick,
-  sortOrder,
+  sortOrderValue,
   onChangeSortOrder,
+  onChangeSortBy,
+  sortByValue,
 }) {
-  // function TodoList({ todoList, onRemoveTodo }) {
   const handleSortChange = (e) => {
     onChangeSortOrder(e.target.value);
+  };
+  const handleSortByChange = (e) => {
+    onChangeSortBy(e.target.value);
   };
   return (
     <div className={style.Container}>
       <h1 className={style.TitleFont}>Todo List</h1>
       <hr />
-      <button type="button" className={style.toggleButton} onClick={onClick}>
-        Sort
-      </button>
-      <select value={sortOrder} onChange={handleSortChange} className={style.toggleSelect} >
+      <select
+        value={sortOrderValue}
+        onChange={handleSortChange}
+        className={style.toggleSelect}
+      >
         <option value="asc">Sort By</option>
         <option value="asc">Asc</option>
         <option value="desc">Desc</option>
+      </select>
+      <select
+        value={sortByValue}
+        onChange={handleSortByChange}
+        className={style.toggleSelect}
+      >
+        <option value="Title">Sort By</option>
+        <option value="Title">Title</option>
         <option value="CompletedAt">Created Date</option>
       </select>
       <ul>
@@ -37,9 +49,9 @@ function TodoList({
 TodoList.propTypes = {
   todoList: PropTypes.object,
   onRemoveTodo: PropTypes.func,
-  onClick: PropTypes.func,
   onChangeSortOrder: PropTypes.func,
-  sortOrder: PropTypes.string.isRequired,
-  // sortOrder: PropTypes.oneof(["asc", "desc", "createdDate"])
+  onChangeSortBy: PropTypes.func,
+  sortOrderValue: PropTypes.string.isRequired,
+  sortByValue: PropTypes.string.isRequired,
 };
 export default TodoList;

@@ -8,14 +8,11 @@ function App() {
   const [todoList, setTodoList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [sortOrder, setSortOrder] = useState("asc");
+  const [sortBy, setSortBy] = useState("Title");
 
   useEffect(() => {
     fetchData();
-  }, [sortOrder]);
-
-  // useEffect(() => {
-  //   console.log("sort", sortOrder);
-  // }, [sortOrder]);
+  }, [sortOrder, sortBy]);
 
   const fetchData = async () => {
     const options = {
@@ -25,21 +22,11 @@ function App() {
       },
     };
 
-    let sortField;
-    let i;
-    if (sortOrder === "CompletedAt") {
-      sortField = "CompletedAt";
-      i = 1;
-    } else {
-      i = 0;
-      sortField = "Title";
-    }
-
     const url = `https://api.airtable.com/v0/${
       import.meta.env.VITE_AIRTABLE_BASE_ID
     }/${
       import.meta.env.VITE_TABLE_NAME
-    }?view=Grid%20view&sort[0][field]=${sortField}&sort[0][direction]=${sortOrder}`;
+    }?view=Grid%20view&sort[0][field]=${sortBy}&sort[0][direction]=${sortOrder}`;
 
     try {
       const response = await fetch(url, options);
@@ -47,20 +34,14 @@ function App() {
         const message = `Error has occurred: ${response.status}`;
         throw new Error(message);
       }
-      const data = await response.json();
-      console.log(data.records);
+      const data = await response.json();     
       data.records.sort((objectA, objectB) => {
-        const titleA = objectA.fields.Title.toLowerCase();
-        const titleB = objectB.fields.Title.toLowerCase();
-        console.log(objectB.fields);
+        const titleA = objectA.fields[sortBy];
+        const titleB = objectB.fields[sortBy];       
         if (sortOrder === "asc") {
-          if (titleA < titleB) return -1;
-          if (titleA > titleB) return 1;
-          return 0;
-        } else {
-          if (titleA < titleB) return 1;
-          if (titleA > titleB) return -1;
-          return 0;
+          return titleA.localeCompare(titleB);        
+        } else if (sortOrder === "desc") {
+          return titleB.localeCompare(titleA);       
         }
       });
       const todos = data.records.map((todo) => ({
@@ -112,12 +93,14 @@ function App() {
       console.error("Error adding todo:", error.message);
     }
   };
+  
   const toggleSort = (sortValue) => {
     setSortOrder(sortValue);
   };
-  const togglesort = () => {
-    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-  };
+  
+  const toggleSortBy = (sortByValue) => {
+    setSortBy(sortByValue);
+  };  
   const removeTodo = (id) => {
     const newTodoList = todoList.filter((todo) => id !== todo.id);
     setTodoList(newTodoList);
@@ -136,14 +119,12 @@ function App() {
                 <>
                   <TodoList
                     todoList={todoList}
-                    onRemoveTodo={removeTodo}
-                    onClick={togglesort}
+                    onRemoveTodo={removeTodo}                    
+                    sortOrderValue={sortOrder}
                     onChangeSortOrder={toggleSort}
-                    sortOrder={sortOrder}
-                  />
-                  {/* <button type="button" onClick={togglesort}>
-                    Sort
-                  </button> */}
+                    onChangeSortBy={toggleSortBy}
+                    sortByValue={sortBy}
+                  />                 
                 </>
               )}
               <AddTodoForm addTodo={addTodo} />
