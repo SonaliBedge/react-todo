@@ -34,7 +34,7 @@ function TodoList({
         onChange={handleSortByChange}
         className={style.toggleSelect}
       >
-        <option value="Title">Sort By</option>
+        <option value="Title">Sort By Field</option>
         <option value="Title">Title</option>
         <option value="CompletedAt">Created Date</option>
       </select>

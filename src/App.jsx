@@ -34,14 +34,14 @@ function App() {
         const message = `Error has occurred: ${response.status}`;
         throw new Error(message);
       }
-      const data = await response.json();     
+      const data = await response.json();
       data.records.sort((objectA, objectB) => {
-        const titleA = objectA.fields[sortBy];
-        const titleB = objectB.fields[sortBy];       
+        const fieldA = objectA.fields[sortBy];
+        const fieldB = objectB.fields[sortBy];
         if (sortOrder === "asc") {
-          return titleA.localeCompare(titleB);        
+          return fieldA.localeCompare(fieldB);
         } else if (sortOrder === "desc") {
-          return titleB.localeCompare(titleA);       
+          return fieldB.localeCompare(fieldA);
         }
       });
       const todos = data.records.map((todo) => ({
@@ -79,7 +79,7 @@ function App() {
 
       const response = await fetch(url, options);
       if (!response.ok) {
-        throw new Error(`Error adding todo: ${response.status}`);        
+        throw new Error(`Error adding todo: ${response.status}`);
       }
       const data = await response.json();
 
@@ -88,8 +88,6 @@ function App() {
         title: data.fields.Title,
         CompletedAt: data.fields.CompletedAt,
       };
-
-      // setTodoList([...todoList, addTodo]);
       setTodoList((todoList) => {
         const updatedList = [...todoList, addTodo];
         updatedList.sort((a, b) => {
@@ -101,14 +99,14 @@ function App() {
       console.error("Error adding todo:", error.message);
     }
   };
-  
+
   const toggleSort = (sortValue) => {
     setSortOrder(sortValue);
   };
-  
+
   const toggleSortBy = (sortByValue) => {
     setSortBy(sortByValue);
-  };  
+  };
   const removeTodo = async (id) => {
     try {
       const options = {
@@ -129,11 +127,10 @@ function App() {
       }
 
       // Update todoList state by filtering out the removed todo
-    setTodoList(todoList.filter((todo) => id !== todo.id));
+      setTodoList(todoList.filter((todo) => id !== todo.id));
     } catch (error) {
       console.error("Error deleting todo:", error.message);
     }
-    
   };
 
   return (
@@ -149,12 +146,12 @@ function App() {
                 <>
                   <TodoList
                     todoList={todoList}
-                    onRemoveTodo={removeTodo}                    
+                    onRemoveTodo={removeTodo}
                     sortOrderValue={sortOrder}
                     onChangeSortOrder={toggleSort}
                     onChangeSortBy={toggleSortBy}
                     sortByValue={sortBy}
-                  />                 
+                  />
                 </>
               )}
               <AddTodoForm addTodo={addTodo} />
@@ -168,11 +165,3 @@ function App() {
 }
 
 export default App;
-
-{
-  /* <TodoList
-todoList={todoList}
-onRemoveTodo={removeTodo}
-onClick={togglesort}
-/> */
-}

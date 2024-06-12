@@ -35,14 +35,12 @@
 .toggleButton {
   background-color: #56e50e;
   color: #fff;
-    border: none;
-    /* align-items: left; */
+    border: none;    
     padding: 5px 10px;
 }
 .toggleSelect {
   background-color: #f7f8f7;
-  color: #100f0f;
-  /* border: none;     */
+  color: #100f0f;  
   margin-left: 40px;
   padding: 5px 10px;
 }

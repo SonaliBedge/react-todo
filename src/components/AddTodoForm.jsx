@@ -24,14 +24,12 @@ function AddTodoForm({ addTodo }) {
 
   const handleAddTodo = (event) => {
     event.preventDefault();
-    // console.log(Date.now());
     const newTodo = {
       title: todoTitle,
       id: Date.now(),
       CompletedAt: formattedDate,
     };
     addTodo(newTodo);
-    // console.log(newTodo);
     setTodoTitle("");
   };
 
