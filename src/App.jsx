@@ -7,10 +7,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   const [todoList, setTodoList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortBy, setSortBy] = useState("Title");
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [sortOrder, sortBy]);
 
   const fetchData = async () => {
     const options = {
@@ -19,9 +21,12 @@ function App() {
         Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
       },
     };
+
     const url = `https://api.airtable.com/v0/${
       import.meta.env.VITE_AIRTABLE_BASE_ID
-    }/${import.meta.env.VITE_TABLE_NAME}`;
+    }/${
+      import.meta.env.VITE_TABLE_NAME
+    }?view=Grid%20view&sort[0][field]=${sortBy}&sort[0][direction]=${sortOrder}`;
 
     try {
       const response = await fetch(url, options);
@@ -30,14 +35,21 @@ function App() {
         throw new Error(message);
       }
       const data = await response.json();
-
-      const todos = data.records.map((todo) => {
-        const newTodo = {
-          id: todo.id,
-          title: todo.fields.Title,
-        };
-        return newTodo;
+      data.records.sort((objectA, objectB) => {
+        const fieldA = objectA.fields[sortBy];
+        const fieldB = objectB.fields[sortBy];
+        if (sortOrder === "asc") {
+          return fieldA.localeCompare(fieldB);
+        } else if (sortOrder === "desc") {
+          return fieldB.localeCompare(fieldA);
+        }
       });
+      const todos = data.records.map((todo) => ({
+        id: todo.id,
+        title: todo.fields.Title,
+        CompletedAt: todo.fields.CompletedAt,
+      }));
+
       setTodoList(todos);
       setIsLoading(false);
     } catch (error) {
@@ -56,6 +68,7 @@ function App() {
         body: JSON.stringify({
           fields: {
             Title: newTodo.title,
+            CompletedAt: newTodo.CompletedAt,
           },
         }),
       };
@@ -66,26 +79,58 @@ function App() {
 
       const response = await fetch(url, options);
       if (!response.ok) {
-        const message = `Error has occurred: ${response.status}`;
-        throw new Error(message);
+        throw new Error(`Error adding todo: ${response.status}`);
       }
-
       const data = await response.json();
 
       const addTodo = {
         id: data.id,
         title: data.fields.Title,
+        CompletedAt: data.fields.CompletedAt,
       };
-
-      setTodoList([...todoList, addTodo]);
+      setTodoList((todoList) => {
+        const updatedList = [...todoList, addTodo];
+        updatedList.sort((a, b) => {
+          return new Date(a.CompletedAt) - new Date(b.CompletedAt);
+        });
+        return updatedList;
+      });
     } catch (error) {
       console.error("Error adding todo:", error.message);
     }
   };
 
-  const removeTodo = (id) => {
-    const newTodoList = todoList.filter((todo) => id !== todo.id);
-    setTodoList(newTodoList);
+  const toggleSort = (sortValue) => {
+    setSortOrder(sortValue);
+  };
+
+  const toggleSortBy = (sortByValue) => {
+    setSortBy(sortByValue);
+  };
+  const removeTodo = async (id) => {
+    try {
+      const options = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
+        },
+      };
+
+      const url = `https://api.airtable.com/v0/${
+        import.meta.env.VITE_AIRTABLE_BASE_ID
+      }/${import.meta.env.VITE_TABLE_NAME}/${id}`;
+
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(`Error deleting todo: ${response.status}`);
+      }
+
+      // Update todoList state by filtering out the removed todo
+      setTodoList(todoList.filter((todo) => id !== todo.id));
+    } catch (error) {
+      console.error("Error deleting todo:", error.message);
+    }
   };
 
   return (
@@ -99,7 +144,14 @@ function App() {
                 <p>Loading...</p>
               ) : (
                 <>
-                  <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
+                  <TodoList
+                    todoList={todoList}
+                    onRemoveTodo={removeTodo}
+                    sortOrderValue={sortOrder}
+                    onChangeSortOrder={toggleSort}
+                    onChangeSortBy={toggleSortBy}
+                    sortByValue={sortBy}
+                  />
                 </>
               )}
               <AddTodoForm addTodo={addTodo} />
