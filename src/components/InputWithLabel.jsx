@@ -11,13 +11,17 @@ function InputWithLabel({
   todoTitle,
   handleTitleChange,
 }) {
+  // Create a ref for the input element
   const inputRef = useRef();
+
+   // Set focus on input element if isFocused prop is true
   useEffect(() => {
     if (isFocused && inputRef.current) {
       inputRef.current.focus();
     }
   }, [isFocused]);
 
+  // Render component
   return (
     <>
       <div className={style.FormLink}>
@@ -35,6 +39,8 @@ function InputWithLabel({
     </>
   );
 }
+
+// Define prop types for InputWithLabel component
 InputWithLabel.propTypes = {
   isFocused: PropTypes.bool,
   children: PropTypes.string,

@@ -28,7 +28,10 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color:rgb(252, 250, 252);
+  /* background-color:rgb(203, 246, 216); */
+  /* background-image: url('./media/background_img.jpg'); */
+  background-image: url('./media/Background-img.jpg');
+  background-size: cover;
 }
 
 h3 {

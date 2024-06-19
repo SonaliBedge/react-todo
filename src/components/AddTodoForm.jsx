@@ -6,22 +6,24 @@ import style from "./TodoListItem.module.css";
 import PropTypes from "prop-types";
 
 function AddTodoForm({ addTodo }) {
+  // Define state variables
   const [todoTitle, setTodoTitle] = React.useState("");
+
+  // Handle changes to todoTitle state variable
   const handleTitleChange = (event) => {
-    const newTodoTitle = event.target.value;
-    setTodoTitle(newTodoTitle);
+    setTodoTitle(event.target.value);
   };
 
+  // Get current date and format it as "YYYY-MM-DD"
   const today = new Date();
   const day = today.getDate();
   const month = today.getMonth() + 1; // Note: month is zero-based, so January is 0
   const year = today.getFullYear();
-
-  // Formatting the date as "YYYY-MM-DD"
   const formattedDate = `${year}-${month < 10 ? "0" + month : month}-${
     day < 10 ? "0" + day : day
   }`;
 
+  // Handle submission of new todo
   const handleAddTodo = (event) => {
     event.preventDefault();
     const newTodo = {
@@ -33,10 +35,14 @@ function AddTodoForm({ addTodo }) {
     setTodoTitle("");
   };
 
+   // Render component
   return (
     <div>
+      {/* Heading */}
       <h3>Add New Todo List</h3>
       <form onSubmit={handleAddTodo}>
+
+        {/* Input field */}
         <span>
           <InputWithLabel
             type="text"
@@ -46,15 +52,20 @@ function AddTodoForm({ addTodo }) {
             todoTitle={todoTitle}
             handleTitleChange={handleTitleChange}
           >
-            <strong>Title:</strong>
+            Title:
           </InputWithLabel>
         </span>
         <br />
-        <input type="submit" value="Add" className={style.ListButton} />
+
+        {/* Submit button */}
+        <input type="submit" value="Add" className={style.formButton} />
+        <br />
       </form>
     </div>
   );
 }
+
+// Define prop types for AddTodoForm component
 AddTodoForm.propTypes = {
   addTodo: PropTypes.func,
 };
