@@ -179,6 +179,37 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
           />
         </>
       )}
+
+      <div>
+        <h5>Built by Sonali Bedge</h5>
+        <a href="mailto:bedgesonali@yahoo.com" target="_blank">
+          <img
+            width="40"
+            height="40"
+            src="./src/media/mail_img.png"
+            alt="secured-letter"
+          />
+        </a>
+        <a href="https://github.com/SonaliBedge" target="_blank">
+          <img
+            width="40"
+            height="40"
+            alt="GitHub"
+            src="./src/media/github--v1.png"
+          />
+        </a>
+        <a
+          href="https://www.linkedin.com/in/sonali-bedge-488a07155/"
+          target="_blank"
+        >
+          <img
+            width="40"
+            height="40"
+            alt="linkedin"
+            src="./src/media/linkedin--v2.png"
+          />
+        </a>
+      </div>
     </>
   );
 }

@@ -61,7 +61,7 @@ function TodoList({
 }
 // Define prop types for TodoList component
 TodoList.propTypes = {
-  todoList: PropTypes.object,
+  todoList: PropTypes.array.isRequired,
   onRemoveTodo: PropTypes.func,
   onChangeSortOrder: PropTypes.func,
   onChangeSortBy: PropTypes.func,
