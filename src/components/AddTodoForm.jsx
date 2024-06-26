@@ -26,6 +26,7 @@ function AddTodoForm({ addTodo }) {
   // Handle submission of new todo
   const handleAddTodo = (event) => {
     event.preventDefault();
+    if (todoTitle.trim() !== "") {
     const newTodo = {
       title: todoTitle,
       id: Date.now(),
@@ -33,7 +34,8 @@ function AddTodoForm({ addTodo }) {
     };
     addTodo(newTodo);
     setTodoTitle("");
-  };
+  }
+};
 
    // Render component
   return (
@@ -58,7 +60,7 @@ function AddTodoForm({ addTodo }) {
         <br />
 
         {/* Submit button */}
-        <input type="submit" value="Add" className={style.formButton} />
+        <input type="submit" value="Add" className={style.formButton} disabled={todoTitle.trim() === ""}/>
         <br />
       </form>
     </div>
