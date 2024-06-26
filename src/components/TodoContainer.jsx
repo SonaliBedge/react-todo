@@ -28,8 +28,8 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
     } else {
       setShowAddTodoForm(false);
     }
-    console.log(showAddTodoForm);
-  }, [location]);
+    
+  }, [location , showAddTodoForm]);
 
   // Fetch data from Airtable API
   const fetchData = async () => {
@@ -216,7 +216,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
 
 // Define prop types for TodoContainer component
 TodoContainer.propTypes = {
-  addTodo: PropTypes.func,
+  // addTodo: PropTypes.func,
   tableName: PropTypes.string.isRequired,
   tableBaseId: PropTypes.string.isRequired,
   tableAPIToken: PropTypes.string.isRequired,

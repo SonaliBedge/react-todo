@@ -18,7 +18,7 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 .nav {
-  /*background-color:  hsl(210, 50%, 92%);/* Background color */
+  
   padding: 10px; /* Padding around navigation */
   margin-bottom: 20px; /* Space below navigation */
   text-align: center; /* Center-align navigation items */
