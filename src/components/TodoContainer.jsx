@@ -186,7 +186,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
           <img
             width="40"
             height="40"
-            src="./src/media/mail_img.png"
+            src="./media/mail_img.png"
             alt="secured-letter"
           />
         </a>
@@ -195,7 +195,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
             width="40"
             height="40"
             alt="GitHub"
-            src="./src/media/github--v1.png"
+            src="./media/github--v1.png"
           />
         </a>
         <a
@@ -206,7 +206,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
             width="40"
             height="40"
             alt="linkedin"
-            src="./src/media/linkedin--v2.png"
+            src="./media/linkedin--v2.png"
           />
         </a>
       </div>
