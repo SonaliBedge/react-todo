@@ -17,6 +17,31 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
+.nav {
+  
+  padding: 10px; /* Padding around navigation */
+  margin-bottom: 20px; /* Space below navigation */
+  text-align: center; /* Center-align navigation items */
+}
+/* Define styles for navigation links */
+.nav-link {
+  display: inline-block;
+  margin-right: 20px;
+  color: #333; /* Text color */
+  text-decoration: none; /* Remove underline */
+  padding: 8px 12px; /* Padding inside link */
+  border-radius: 5px; /* Rounded corners */
+  background-color: #5b6ba4; /* Button background color */
+  color: #fff; /* Text color */
+  font-weight: bold; /* Make text bold */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.nav-link:hover {
+  background-color: #0056b3; /* Darker background on hover */
+  box-shadow: 0 0 10px rgba(235, 43, 43, 0.1);
+}
+
 
 @keyframes logo-spin {
   from {

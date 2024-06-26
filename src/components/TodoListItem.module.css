@@ -1,6 +1,9 @@
 .Container {
   border: 2px solid #ccc; 
-  padding: 20px; 
+  padding: 20px;
+  background: linear-gradient(rgb(203, 244, 170), #70d1ef, #f13c4b); 
+  /* background-color: hsl(210, 50%, 92%); */
+  
 }
 .ListItem {
     margin-bottom: 10px;    
@@ -12,7 +15,7 @@
 }
 .ListLink {
     text-decoration: none;
-    color: #333;
+    color: #1c020c;
     font-family: 'Patrick Hand', Inter, system-ui;
     font-size: 20px;
     width: 440px;
@@ -22,7 +25,7 @@
     color: brown;
 }
 .ListButton {   
-    background-color: #fc583b;
+    background-color: #d92a21;
     color: #fff;
     border: none;
     padding: 5px 10px;
@@ -32,6 +35,14 @@
     text-decoration: underline;
     color: rgb(27, 21, 55);
 }
+.formButton {   
+  background-color: #202dec;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
 .toggleButton {
   background-color: #56e50e;
   color: #fff;
@@ -39,10 +50,19 @@
     padding: 5px 10px;
 }
 .toggleSelect {
-  background-color: #f7f8f7;
-  color: #100f0f;  
+  background-color: #d0f7d2;
+  color: #090000;
   margin-left: 40px;
   padding: 5px 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: 'Patrick Hand', Inter, system-ui;
+  cursor: pointer;
+  /* background-color: #f7f8f7;
+  color: #100f0f;  
+  margin-left: 40px;
+  padding: 5px 10px; */
 }
 .ListHr {
     border: none;
@@ -50,11 +70,12 @@
 }
 .TitleFont {
   font-size: 3.2em;
-  line-height: 1.1;   
+  line-height: 0.8;   
   font-family: 'Honk', Inter, system-ui;
 }
 .FormText {  
-  color: brown;
+  color: rgb(211, 112, 112);
+  font-size: 20px;
 }
 .FormLink {
   display: flex; 
@@ -69,14 +90,23 @@
 .FormLink label {
   width: 100px; 
   margin-right: 10px; 
+  
 }
 
 .FormLink input {
   flex: 1; 
-  background-color: #6F1F25;
-  color: rgb(245, 239, 239);
+  background-color: #f7f4f3;
+  color: rgb(1, 1, 1);
+  font-size: 20px;
 }
 /* Media queries for responsiveness */
+
+/* Styles for devices with a maximum width of 992px */
+@media (max-width: 992px) {
+  .ListLink {
+    width: 300px;
+  }
+}
 
 /* Styles for devices with a maximum width of 758px */
 @media (max-width: 758px) {
@@ -89,6 +119,11 @@
   }
 .ListLink {
   width: 150px;
+  margin-bottom: 10px;
+}
+.toggleSelect {
+  margin-left: 0;
+  margin-top: 10px;
 }
   .FormLink label {
     margin-bottom: 5px; /* Add space between label and input */
@@ -97,6 +132,9 @@
   
   /* Styles for devices with a maximum width of 576px (mobile devices) */
   @media (max-width: 576px) {
+    .ListLink {
+      font-size: 16px;
+    }
     .ListButton {
       font-size: 14px; /* Reduce button font size for smaller screens */
       padding: 3px 6px; /* Adjust button padding */

@@ -10,25 +10,36 @@ function TodoList({
   onChangeSortBy,
   sortByValue,
 }) {
-  const handleSortChange = (e) => {
-    onChangeSortOrder(e.target.value);
+  // Handle change to sort order
+  const handleSortChange = (event) => {
+    onChangeSortOrder(event.target.value);
   };
-  const handleSortByChange = (e) => {
-    onChangeSortBy(e.target.value);
+
+  // Handle change to sort by field
+  const handleSortByChange = (event) => {
+    onChangeSortBy(event.target.value);
   };
+
+  // Render component
   return (
     <div className={style.Container}>
+      {/* Title */}
       <h1 className={style.TitleFont}>Todo List</h1>
       <hr />
+
+      {/* Sort order dropdown */}
       <select
         value={sortOrderValue}
         onChange={handleSortChange}
         className={style.toggleSelect}
+        
       >
         <option value="asc">Sort By</option>
         <option value="asc">Asc</option>
         <option value="desc">Desc</option>
       </select>
+
+      {/* Sort by field dropdown */}
       <select
         value={sortByValue}
         onChange={handleSortByChange}
@@ -38,6 +49,8 @@ function TodoList({
         <option value="Title">Title</option>
         <option value="CompletedAt">Created Date</option>
       </select>
+
+      {/* Todo list */}
       <ul>
         {todoList.map((todo) => (
           <TodoListItem key={todo.id} todo={todo} onRemoveTodo={onRemoveTodo} />
@@ -46,8 +59,9 @@ function TodoList({
     </div>
   );
 }
+// Define prop types for TodoList component
 TodoList.propTypes = {
-  todoList: PropTypes.object,
+  todoList: PropTypes.array.isRequired,
   onRemoveTodo: PropTypes.func,
   onChangeSortOrder: PropTypes.func,
   onChangeSortBy: PropTypes.func,

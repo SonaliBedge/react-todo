@@ -28,7 +28,10 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color:rgb(252, 250, 252);
+  /* background-color:rgb(203, 246, 216); */
+  /* background-image: url('./media/background_img.jpg'); */
+  background-image: url('./media/Background-img.jpg');
+  background-size: cover;
 }
 
 h3 {
@@ -40,7 +43,13 @@ h3 {
 span:nth-child(2) {
   margin-left: 10px; /* Adjust as needed */
 }
-
+#dark-mode-btn {
+  position: fixed;
+  top: 10px;
+  right: 30px;
+  /* width: 30px;
+  height: 30px; */
+}
 button {
   border-radius: 8px;
   border: 1px solid transparent;
