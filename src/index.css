@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(30, 28, 28, 0.87);
-  background-color: #796b6b;
+  background-color: #b4b9f0;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -30,7 +30,8 @@ body {
   min-height: 100vh;
   /* background-color:rgb(203, 246, 216); */
   /* background-image: url('./media/background_img.jpg'); */
-  background-image: url('./media/Background-img.jpg');
+  /* background-image: url(./../public/media/Background-img.jpg); */
+  background-image: url('/media/Background-img.jpg');
   background-size: cover;
 }
 
