@@ -11,6 +11,9 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortBy, setSortBy] = useState("Title");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [notifPermission, setNotifPermission] = useState(
+    "Notification" in window ? Notification.permission : "denied"
+  );
   const errorTimerRef = useRef(null);
   const notifiedRef = useRef(new Set());
 
@@ -21,16 +24,16 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
     errorTimerRef.current = setTimeout(() => setErrorMessage(null), 4000);
   };
 
-  // Request browser notification permission on mount
-  useEffect(() => {
-    if ("Notification" in window && Notification.permission === "default") {
-      Notification.requestPermission();
-    }
-  }, []);
+  // Request notification permission on button click (required by Safari)
+  const handleEnableNotifications = () => {
+    Notification.requestPermission().then((permission) => {
+      setNotifPermission(permission);
+    });
+  };
 
   // Check deadlines and fire notifications for overdue / due-today incomplete todos
   useEffect(() => {
-    if (!("Notification" in window) || Notification.permission !== "granted") return;
+    if (notifPermission !== "granted") return;
 
     const checkDeadlines = () => {
       const today = new Date().toISOString().split("T")[0];
@@ -50,7 +53,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
     checkDeadlines();
     const interval = setInterval(checkDeadlines, 60000);
     return () => clearInterval(interval);
-  }, [todoList]);
+  }, [todoList, notifPermission]);
 
   // Fetch data from Airtable API when sortOrder or sortBy state variables change
   useEffect(() => {
@@ -263,6 +266,14 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
         <div className="errorBanner">
           {errorMessage}
           <button className="errorClose" onClick={() => setErrorMessage(null)}>✕</button>
+        </div>
+      )}
+
+      {/* Notification permission banner */}
+      {"Notification" in window && notifPermission === "default" && (
+        <div className="errorBanner" style={{ backgroundColor: "var(--accent)", justifyContent: "space-between" }}>
+          <span>Enable notifications to get deadline reminders.</span>
+          <button className="errorClose" onClick={handleEnableNotifications}>Enable</button>
         </div>
       )}
 
