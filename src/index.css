@@ -2,15 +2,60 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(30, 28, 28, 0.87);
-  background-color: #b4b9f0;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Light mode tokens */
+  --bg: linear-gradient(135deg, #e8ecf5 0%, #c9d2e8 50%, #a8b4d4 100%);
+  --container-bg: rgba(255, 255, 255, 0.92);
+  --container-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  --text-primary: #2c3e50;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --accent: #5b6ba4;
+  --accent-hover: #4a5a93;
+  --accent-disabled: #b0b8d1;
+  --border-color: #b0b8d1;
+  --hr-color: #e0e0e0;
+  --input-bg: #f9f9f9;
+  --select-bg: #fff;
+  --badge-high-bg: #fdecea;
+  --badge-high-color: #c0392b;
+  --badge-high-border: #e74c3c;
+  --badge-med-bg: #fef9e7;
+  --badge-med-color: #d68910;
+  --badge-med-border: #f39c12;
+  --badge-low-bg: #eafaf1;
+  --badge-low-color: #1e8449;
+  --badge-low-border: #27ae60;
+}
+
+/* Dark mode token overrides */
+body.dark {
+  --bg: linear-gradient(135deg, #1a1f2e 0%, #252d3d 50%, #1e2538 100%);
+  --container-bg: rgba(28, 33, 50, 0.97);
+  --container-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --text-primary: #e8ecf5;
+  --text-secondary: #a0a8c0;
+  --text-muted: #6b7280;
+  --accent: #8897c4;
+  --accent-hover: #9aa8d0;
+  --accent-disabled: #3d4a6a;
+  --border-color: #3d4a6a;
+  --hr-color: #2d3548;
+  --input-bg: #252d3d;
+  --select-bg: #252d3d;
+  --badge-high-bg: #3d1f1f;
+  --badge-high-color: #e88080;
+  --badge-high-border: #8b3333;
+  --badge-med-bg: #3d3220;
+  --badge-med-color: #e8c070;
+  --badge-med-border: #8b6820;
+  --badge-low-bg: #1f3d2a;
+  --badge-low-color: #70c48a;
+  --badge-low-border: #2a8b4a;
 }
 
 a {
@@ -28,8 +73,9 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-image: url('/media/Background-img.jpg');
-  background-size: cover;
+  background: var(--bg);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 h3 {
@@ -62,15 +108,3 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}

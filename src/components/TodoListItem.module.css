@@ -1,9 +1,9 @@
 /* ── Container ── */
 .Container {
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--container-bg);
   backdrop-filter: blur(8px);
   border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--container-shadow);
   padding: 28px 32px;
   max-width: 700px;
   margin: 0 auto;
@@ -14,7 +14,7 @@
   font-size: 2.6em;
   line-height: 1;
   font-family: 'Patrick Hand', Inter, system-ui;
-  color: #2c3e50;
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
@@ -26,25 +26,92 @@
 }
 .ListItem {
   margin-bottom: 10px;
+  width: 100%;
 }
 .ListContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 .ListLink {
   text-decoration: none;
-  color: #2c3e50;
+  color: var(--text-primary);
   font-family: 'Patrick Hand', Inter, system-ui;
   font-size: 20px;
   width: 440px;
 }
 .ListLink:hover {
-  color: #5b6ba4;
+  color: var(--accent);
 }
 .ListHr {
   border: none;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--hr-color);
+}
+
+/* ── Priority badge ── */
+.priorityBadge {
+  font-family: 'Patrick Hand', Inter, system-ui;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.priorityHigh {
+  background-color: var(--badge-high-bg);
+  color: var(--badge-high-color);
+  border: 1px solid var(--badge-high-border);
+}
+.priorityMedium {
+  background-color: var(--badge-med-bg);
+  color: var(--badge-med-color);
+  border: 1px solid var(--badge-med-border);
+}
+.priorityLow {
+  background-color: var(--badge-low-bg);
+  color: var(--badge-low-color);
+  border: 1px solid var(--badge-low-border);
+}
+
+/* ── Deadline badge ── */
+.deadlineBadge {
+  font-family: 'Patrick Hand', Inter, system-ui;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+.deadlineOverdue {
+  background-color: var(--badge-high-bg);
+  color: var(--badge-high-color);
+  border: 1px solid var(--badge-high-border);
+}
+.deadlineToday {
+  background-color: var(--badge-med-bg);
+  color: var(--badge-med-color);
+  border: 1px solid var(--badge-med-border);
+}
+.deadlineUpcoming {
+  background-color: var(--badge-low-bg);
+  color: var(--badge-low-color);
+  border: 1px solid var(--badge-low-border);
+}
+
+/* ── Priority / Deadline row in form ── */
+.formMetaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 10px;
+  margin-bottom: 14px;
+}
+.priorityRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 /* ── Completed state ── */
@@ -56,10 +123,62 @@
 /* ── Empty state ── */
 .emptyState {
   text-align: center;
-  color: #888;
+  color: var(--text-muted);
   font-size: 18px;
   margin-top: 30px;
   font-family: 'Patrick Hand', Inter, system-ui;
+}
+
+/* ── Filter buttons ── */
+.filterGroup {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0 12px 0;
+}
+.filterButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1.5px solid var(--border-color);
+  border-radius: 20px;
+  padding: 5px 16px;
+  font-family: 'Patrick Hand', Inter, system-ui;
+  font-size: 15px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.filterButton:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.filterActive {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.filterActive:hover {
+  background-color: var(--accent-hover);
+  color: #fff;
+}
+.filterCount {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 13px;
+}
+.filterActive .filterCount {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Sort controls ── */
+.sortControls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  gap: 4px;
 }
 
 /* ── Sort controls ── */
@@ -67,14 +186,14 @@
   font-family: 'Patrick Hand', Inter, system-ui;
   font-size: 14px;
   margin-left: 12px;
-  color: #555;
+  color: var(--text-secondary);
 }
 .toggleSelect {
-  background-color: #fff;
-  color: #2c3e50;
+  background-color: var(--select-bg);
+  color: var(--text-primary);
   margin-left: 6px;
   padding: 5px 10px;
-  border: 1.5px solid #b0b8d1;
+  border: 1.5px solid var(--border-color);
   border-radius: 6px;
   font-size: 14px;
   font-family: 'Patrick Hand', Inter, system-ui;
@@ -82,7 +201,7 @@
 }
 .toggleSelect:focus {
   outline: none;
-  border-color: #5b6ba4;
+  border-color: var(--accent);
 }
 
 /* ── Buttons ── */
@@ -100,7 +219,7 @@
   background-color: #c0392b;
 }
 .formButton {
-  background-color: #5b6ba4;
+  background-color: var(--accent);
   color: #fff;
   border: none;
   padding: 7px 20px;
@@ -111,14 +230,14 @@
   font-size: 16px;
 }
 .formButton:hover {
-  background-color: #4a5a93;
+  background-color: var(--accent-hover);
 }
 .formButton:disabled {
-  background-color: #b0b8d1;
+  background-color: var(--accent-disabled);
   cursor: not-allowed;
 }
 .saveButton {
-  background-color: #5b6ba4;
+  background-color: var(--accent);
   color: #fff;
   border: none;
   padding: 5px 12px;
@@ -128,7 +247,7 @@
   font-size: 14px;
 }
 .saveButton:hover {
-  background-color: #4a5a93;
+  background-color: var(--accent-hover);
 }
 .cancelButton {
   background-color: #95a5a6;
@@ -172,6 +291,11 @@
   display: flex;
   gap: 6px;
   align-items: center;
+  visibility: hidden;
+}
+.ListContainer:hover .actionButtons,
+.ListContainer:focus-within .actionButtons {
+  visibility: visible;
 }
 .editInputWrapper {
   display: flex;
@@ -183,13 +307,15 @@
   font-family: 'Patrick Hand', Inter, system-ui;
   font-size: 18px;
   padding: 3px 8px;
-  border: 1.5px solid #b0b8d1;
+  border: 1.5px solid var(--border-color);
   border-radius: 6px;
   flex: 1;
+  background-color: var(--input-bg);
+  color: var(--text-primary);
 }
 .editInput:focus {
   outline: none;
-  border-color: #5b6ba4;
+  border-color: var(--accent);
 }
 
 /* ── Form ── */
@@ -202,10 +328,10 @@
 .FormLink {
   display: flex;
   align-items: center;
-  color: #2c3e50;
+  color: var(--text-primary);
   font-family: 'Patrick Hand', Inter, system-ui;
   font-size: 20px;
-  border: 1.5px solid #b0b8d1;
+  border: 1.5px solid var(--border-color);
   border-radius: 8px;
   padding: 16px 20px;
 }
@@ -215,8 +341,8 @@
 }
 .FormLink input {
   flex: 1;
-  background-color: #f9f9f9;
-  color: #2c3e50;
+  background-color: var(--input-bg);
+  color: var(--text-primary);
   font-size: 20px;
   border: none;
   outline: none;
@@ -224,7 +350,6 @@
 }
 
 /* ── Unused legacy classes kept for safety ── */
-.ListItem { margin-bottom: 10px; }
 .toggleButton { display: none; }
 .FormText { color: #e74c3c; font-size: 20px; }
 
@@ -258,4 +383,5 @@
   }
   .FormLink label { width: 80px; }
   .FormLink input { font-size: 16px; }
+  .actionButtons { visibility: visible; }
 }

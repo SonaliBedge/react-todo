@@ -9,6 +9,8 @@ function AddTodoForm({ addTodo }) {
   // Define state variables
   const [todoTitle, setTodoTitle] = React.useState("");
   const [touched, setTouched] = React.useState(false);
+  const [priority, setPriority] = React.useState("Medium");
+  const [deadline, setDeadline] = React.useState(new Date().toISOString().split("T")[0]);
 
   // Handle changes to todoTitle state variable
   const handleTitleChange = (event) => {
@@ -19,16 +21,20 @@ function AddTodoForm({ addTodo }) {
   const handleAddTodo = (event) => {
     event.preventDefault();
     if (todoTitle.trim() !== "") {
-    const newTodo = {
-      title: todoTitle,
-      id: Date.now(),
-      CompletedAt: null,
-    };
-    addTodo(newTodo);
-    setTodoTitle("");
-    setTouched(false);
-  }
-};
+      const newTodo = {
+        title: todoTitle,
+        id: Date.now(),
+        CompletedAt: null,
+        Priority: priority,
+        Deadline: deadline,
+      };
+      addTodo(newTodo);
+      setTodoTitle("");
+      setPriority("Medium");
+      setDeadline(new Date().toISOString().split("T")[0]);
+      setTouched(false);
+    }
+  };
 
    // Render component
   return (
@@ -56,11 +62,38 @@ function AddTodoForm({ addTodo }) {
         {touched && todoTitle.trim() === "" && (
           <p className={style.validationMessage}>Title is required.</p>
         )}
-        <br />
+
+        {/* Priority and Deadline on same row */}
+        <div className={style.formMetaRow}>
+          <div className={style.priorityRow}>
+            <label htmlFor="priority" className={style.sortLabel}>Priority:</label>
+            <select
+              id="priority"
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+              className={style.toggleSelect}
+            >
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+
+          <div className={style.priorityRow}>
+            <label htmlFor="deadline" className={style.sortLabel}>Deadline:</label>
+            <input
+              type="date"
+              id="deadline"
+              value={deadline}
+              onChange={(e) => setDeadline(e.target.value)}
+              className={style.toggleSelect}
+              min={new Date().toISOString().split("T")[0]}
+            />
+          </div>
+        </div>
 
         {/* Submit button */}
         <input type="submit" value="Add" className={style.formButton} disabled={todoTitle.trim() === ""}/>
-        <br />
       </form>
     </div>
   );

@@ -12,6 +12,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
   const [sortBy, setSortBy] = useState("Title");
   const [errorMessage, setErrorMessage] = useState(null);
   const errorTimerRef = useRef(null);
+  const notifiedRef = useRef(new Set());
 
   // Show error message and auto-clear after 4 seconds
   const showError = (message) => {
@@ -19,6 +20,37 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
     setErrorMessage(message);
     errorTimerRef.current = setTimeout(() => setErrorMessage(null), 4000);
   };
+
+  // Request browser notification permission on mount
+  useEffect(() => {
+    if ("Notification" in window && Notification.permission === "default") {
+      Notification.requestPermission();
+    }
+  }, []);
+
+  // Check deadlines and fire notifications for overdue / due-today incomplete todos
+  useEffect(() => {
+    if (!("Notification" in window) || Notification.permission !== "granted") return;
+
+    const checkDeadlines = () => {
+      const today = new Date().toISOString().split("T")[0];
+      todoList.forEach((todo) => {
+        if (!todo.Deadline || todo.CompletedAt || notifiedRef.current.has(todo.id)) return;
+        if (todo.Deadline <= today) {
+          const isOverdue = todo.Deadline < today;
+          const body = isOverdue
+            ? `"${todo.title}" is overdue (was due ${todo.Deadline})`
+            : `"${todo.title}" is due today!`;
+          new Notification("Todo Reminder", { body });
+          notifiedRef.current.add(todo.id);
+        }
+      });
+    };
+
+    checkDeadlines();
+    const interval = setInterval(checkDeadlines, 60000);
+    return () => clearInterval(interval);
+  }, [todoList]);
 
   // Fetch data from Airtable API when sortOrder or sortBy state variables change
   useEffect(() => {
@@ -49,6 +81,8 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
         id: todo.id,
         title: todo.fields.Title,
         CompletedAt: todo.fields.CompletedAt,
+        Priority: todo.fields.Priority,
+        Deadline: todo.fields.Deadline,
       }));
 
       // Update state variables
@@ -73,6 +107,8 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
           fields: {
             Title: newTodo.title,
             CompletedAt: newTodo.CompletedAt,
+            Priority: newTodo.Priority,
+            Deadline: newTodo.Deadline || null,
           },
         }),
       };
@@ -90,6 +126,8 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
         id: data.id,
         title: data.fields.Title,
         CompletedAt: data.fields.CompletedAt,
+        Priority: data.fields.Priority,
+        Deadline: data.fields.Deadline,
       };
 
       // Update todoList state variable
@@ -150,17 +188,20 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
   };
 
   // Update todo in Airtable API
-  const updateTodo = async (id, newTitle) => {
+  const updateTodo = async (id, newTitle, newPriority, newDeadline) => {
     try {
+      const fields = {};
+      if (newTitle !== undefined) fields.Title = newTitle;
+      if (newPriority !== undefined) fields.Priority = newPriority;
+      if (newDeadline !== undefined) fields.Deadline = newDeadline || null;
+
       const options = {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${tableAPIToken}`,
         },
-        body: JSON.stringify({
-          fields: { Title: newTitle },
-        }),
+        body: JSON.stringify({ fields }),
       };
 
       const url = `https://api.airtable.com/v0/${tableBaseId}/${tableName}/${id}`;
@@ -172,7 +213,14 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
 
       setTodoList((prev) =>
         prev.map((todo) =>
-          todo.id === id ? { ...todo, title: newTitle } : todo
+          todo.id === id
+            ? {
+                ...todo,
+                ...(newTitle !== undefined && { title: newTitle }),
+                ...(newPriority !== undefined && { Priority: newPriority }),
+                ...(newDeadline !== undefined && { Deadline: newDeadline || null }),
+              }
+            : todo
         )
       );
     } catch (error) {

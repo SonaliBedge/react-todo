@@ -4,11 +4,21 @@ import PropTypes from "prop-types";
 import style from "./TodoListItem.module.css";
 
 function TodoListItem({ todo, onRemoveTodo, onUpdateTodo, onToggleComplete }) {
-  const { title, CompletedAt } = todo;
+  const { title, CompletedAt, Priority, Deadline } = todo;
   const isCompleted = !!CompletedAt;
+  const today = new Date().toISOString().split("T")[0];
+
+  const getDeadlineStyle = (deadline) => {
+    if (isCompleted || !deadline) return "";
+    if (deadline < today) return style.deadlineOverdue;
+    if (deadline === today) return style.deadlineToday;
+    return style.deadlineUpcoming;
+  };
 
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(title);
+  const [editPriority, setEditPriority] = useState(Priority || "Medium");
+  const [editDeadline, setEditDeadline] = useState(Deadline || "");
 
   const handleRemoveTodo = () => {
     if (window.confirm(`Delete "${title}"?`)) {
@@ -18,24 +28,38 @@ function TodoListItem({ todo, onRemoveTodo, onUpdateTodo, onToggleComplete }) {
 
   const handleEditClick = () => {
     setEditTitle(title);
+    setEditPriority(Priority || "Medium");
+    setEditDeadline(Deadline || "");
     setIsEditing(true);
   };
 
   const handleSave = () => {
-    if (editTitle.trim() !== "" && editTitle !== title) {
-      onUpdateTodo(todo.id, editTitle.trim());
+    const trimmed = editTitle.trim();
+    if (trimmed === "") return;
+    const titleChanged = trimmed !== title;
+    const priorityChanged = editPriority !== Priority;
+    const deadlineChanged = editDeadline !== (Deadline || "");
+    if (titleChanged || priorityChanged || deadlineChanged) {
+      onUpdateTodo(
+        todo.id,
+        titleChanged ? trimmed : undefined,
+        priorityChanged ? editPriority : undefined,
+        deadlineChanged ? editDeadline : undefined
+      );
     }
     setIsEditing(false);
   };
 
   const handleCancel = () => {
     setEditTitle(title);
+    setEditPriority(Priority || "Medium");
+    setEditDeadline(Deadline || "");
     setIsEditing(false);
   };
 
   // Render component
   return (
-    <li className={style.ListLink}>
+    <li className={style.ListItem}>
       <div className={style.ListContainer}>
         {isEditing ? (
           /* Edit mode */
@@ -46,6 +70,21 @@ function TodoListItem({ todo, onRemoveTodo, onUpdateTodo, onToggleComplete }) {
               value={editTitle}
               onChange={(e) => setEditTitle(e.target.value)}
               autoFocus
+            />
+            <select
+              className={style.toggleSelect}
+              value={editPriority}
+              onChange={(e) => setEditPriority(e.target.value)}
+            >
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+            <input
+              type="date"
+              className={style.toggleSelect}
+              value={editDeadline}
+              onChange={(e) => setEditDeadline(e.target.value)}
             />
             <button className={style.saveButton} type="button" onClick={handleSave}>
               Save
@@ -64,6 +103,16 @@ function TodoListItem({ todo, onRemoveTodo, onUpdateTodo, onToggleComplete }) {
               onChange={() => onToggleComplete(todo.id, isCompleted)}
               aria-label={`Mark "${title}" as ${isCompleted ? "incomplete" : "complete"}`}
             />
+            {Priority && (
+              <span className={`${style.priorityBadge} ${style[`priority${Priority}`]}`}>
+                {Priority}
+              </span>
+            )}
+            {Deadline && (
+              <span className={`${style.deadlineBadge} ${getDeadlineStyle(Deadline)}`}>
+                📅 {Deadline}
+              </span>
+            )}
             <span className={`${style.ListLink} ${isCompleted ? style.completed : ""}`}>
               {title}
             </span>
@@ -105,6 +154,8 @@ TodoListItem.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     CompletedAt: PropTypes.string,
+    Priority: PropTypes.oneOf(["High", "Medium", "Low"]),
+    Deadline: PropTypes.string,
   }).isRequired,
   onRemoveTodo: PropTypes.func.isRequired,
   onUpdateTodo: PropTypes.func.isRequired,
