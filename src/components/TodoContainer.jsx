@@ -134,13 +134,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
       };
 
       // Update todoList state variable
-      setTodoList((prev) => {
-        const updatedList = [...prev, addedTodo];
-        updatedList.sort((a, b) => {
-          return new Date(a.CompletedAt) - new Date(b.CompletedAt);
-        });
-        return updatedList;
-      });
+      setTodoList((prev) => [...prev, addedTodo]);
     } catch (error) {
       showError("Failed to add todo. Please try again.");
     }
@@ -259,8 +253,6 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
   // Render component
   return (
     <>
-      {/* <h1>{tableName}</h1> */}
-
       {/* Error banner */}
       {errorMessage && (
         <div className="errorBanner">
@@ -271,9 +263,9 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
 
       {/* Notification permission banner */}
       {"Notification" in window && notifPermission === "default" && (
-        <div className="errorBanner" style={{ backgroundColor: "var(--accent)", justifyContent: "space-between" }}>
+        <div className="notifBanner">
           <span>Enable notifications to get deadline reminders.</span>
-          <button className="errorClose" onClick={handleEnableNotifications}>Enable</button>
+          <button className="notifClose" onClick={handleEnableNotifications}>Enable</button>
         </div>
       )}
 
@@ -283,18 +275,16 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <>
-          <TodoList
-            todoList={todoList}
-            onRemoveTodo={removeTodo}
-            onUpdateTodo={updateTodo}
-            onToggleComplete={toggleComplete}
-            sortOrderValue={sortOrder}
-            onChangeSortOrder={toggleSort}
-            onChangeSortBy={toggleSortBy}
-            sortByValue={sortBy}
-          />
-        </>
+        <TodoList
+          todoList={todoList}
+          onRemoveTodo={removeTodo}
+          onUpdateTodo={updateTodo}
+          onToggleComplete={toggleComplete}
+          sortOrderValue={sortOrder}
+          onChangeSortOrder={toggleSort}
+          onChangeSortBy={toggleSortBy}
+          sortByValue={sortBy}
+        />
       )}
 
       <div>
@@ -334,7 +324,6 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
 
 // Define prop types for TodoContainer component
 TodoContainer.propTypes = {
-  // addTodo: PropTypes.func,
   tableName: PropTypes.string.isRequired,
   tableBaseId: PropTypes.string.isRequired,
   tableAPIToken: PropTypes.string.isRequired,

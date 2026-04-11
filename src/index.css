@@ -81,19 +81,9 @@ body {
 h3 {
   font-size: 2.2em;
   line-height: 1.1;
-  color: brown;
+  color: var(--accent);
 }
-/* Add space between the Remove button and anchor tag */
-span:nth-child(2) {
-  margin-left: 10px; /* Adjust as needed */
-}
-#dark-mode-btn {
-  position: fixed;
-  top: 10px;
-  right: 30px;
-  /* width: 30px;
-  height: 30px; */
-}
+
 button {
   border-radius: 6px;
   border: 1px solid transparent;

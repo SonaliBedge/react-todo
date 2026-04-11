@@ -4,7 +4,6 @@ import style from "./TodoListItem.module.css";
 import PropTypes from "prop-types";
 
 const FILTERS = ["All", "Active", "Completed"];
-const PRIORITY_ORDER = { High: 1, Medium: 2, Low: 3 };
 
 function TodoList({
   todoList,
@@ -39,11 +38,6 @@ function TodoList({
     .filter((todo) => {
       if (priorityFilter === "All") return true;
       return todo.Priority === priorityFilter;
-    })
-    .sort((a, b) => {
-      const orderA = PRIORITY_ORDER[a.Priority] ?? 99;
-      const orderB = PRIORITY_ORDER[b.Priority] ?? 99;
-      return sortOrderValue === "asc" ? orderA - orderB : orderB - orderA;
     });
 
   const emptyMessages = {
