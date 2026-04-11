@@ -60,6 +60,7 @@ function TodoList({
     </div>
   );
 }
+
 // Define prop types for TodoList component
 TodoList.propTypes = {
   todoList: PropTypes.array.isRequired,
