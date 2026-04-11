@@ -3,14 +3,17 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import style from "./TodoListItem.module.css";
 
-function TodoListItem({ todo, onRemoveTodo, onUpdateTodo }) {
-  const { title, url } = todo;
+function TodoListItem({ todo, onRemoveTodo, onUpdateTodo, onToggleComplete }) {
+  const { title, CompletedAt } = todo;
+  const isCompleted = !!CompletedAt;
 
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(title);
 
   const handleRemoveTodo = () => {
-    onRemoveTodo(todo.id);
+    if (window.confirm(`Delete "${title}"?`)) {
+      onRemoveTodo(todo.id);
+    }
   };
 
   const handleEditClick = () => {
@@ -53,10 +56,17 @@ function TodoListItem({ todo, onRemoveTodo, onUpdateTodo }) {
           </span>
         ) : (
           /* View mode */
-          <span>
-            <a href={url} className={style.ListLink}>
+          <span className={style.viewMode}>
+            <input
+              type="checkbox"
+              className={style.checkbox}
+              checked={isCompleted}
+              onChange={() => onToggleComplete(todo.id, isCompleted)}
+              aria-label={`Mark "${title}" as ${isCompleted ? "incomplete" : "complete"}`}
+            />
+            <span className={`${style.ListLink} ${isCompleted ? style.completed : ""}`}>
               {title}
-            </a>
+            </span>
           </span>
         )}
 
@@ -68,6 +78,7 @@ function TodoListItem({ todo, onRemoveTodo, onUpdateTodo }) {
               type="button"
               onClick={handleEditClick}
               title="Edit"
+              aria-label={`Edit "${title}"`}
             >
               ✏️
             </button>
@@ -90,8 +101,13 @@ function TodoListItem({ todo, onRemoveTodo, onUpdateTodo }) {
 }
 
 TodoListItem.propTypes = {
-  todo: PropTypes.object,
-  onRemoveTodo: PropTypes.func,
-  onUpdateTodo: PropTypes.func,
+  todo: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    CompletedAt: PropTypes.string,
+  }).isRequired,
+  onRemoveTodo: PropTypes.func.isRequired,
+  onUpdateTodo: PropTypes.func.isRequired,
+  onToggleComplete: PropTypes.func.isRequired,
 };
 export default TodoListItem;

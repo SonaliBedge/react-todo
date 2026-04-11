@@ -1,4 +1,4 @@
-//Refacor Input with Label to use Component Composition
+//Refactor Input with Label to use Component Composition
 
 import * as React from "react";
 import InputWithLabel from "./InputWithLabel";
@@ -8,20 +8,12 @@ import PropTypes from "prop-types";
 function AddTodoForm({ addTodo }) {
   // Define state variables
   const [todoTitle, setTodoTitle] = React.useState("");
+  const [touched, setTouched] = React.useState(false);
 
   // Handle changes to todoTitle state variable
   const handleTitleChange = (event) => {
     setTodoTitle(event.target.value);
   };
-
-  // Get current date and format it as "YYYY-MM-DD"
-  const today = new Date();
-  const day = today.getDate();
-  const month = today.getMonth() + 1; // Note: month is zero-based, so January is 0
-  const year = today.getFullYear();
-  const formattedDate = `${year}-${month < 10 ? "0" + month : month}-${
-    day < 10 ? "0" + day : day
-  }`;
 
   // Handle submission of new todo
   const handleAddTodo = (event) => {
@@ -30,10 +22,11 @@ function AddTodoForm({ addTodo }) {
     const newTodo = {
       title: todoTitle,
       id: Date.now(),
-      CompletedAt: formattedDate,
+      CompletedAt: null,
     };
     addTodo(newTodo);
     setTodoTitle("");
+    setTouched(false);
   }
 };
 
@@ -53,10 +46,16 @@ function AddTodoForm({ addTodo }) {
             isFocused
             todoTitle={todoTitle}
             handleTitleChange={handleTitleChange}
+            onBlur={() => setTouched(true)}
           >
             Title:
           </InputWithLabel>
         </span>
+
+        {/* Validation message */}
+        {touched && todoTitle.trim() === "" && (
+          <p className={style.validationMessage}>Title is required.</p>
+        )}
         <br />
 
         {/* Submit button */}

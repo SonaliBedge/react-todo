@@ -10,6 +10,7 @@ function InputWithLabel({
   id,
   todoTitle,
   handleTitleChange,
+  onBlur,
 }) {
   // Create a ref for the input element
   const inputRef = useRef();
@@ -34,6 +35,8 @@ function InputWithLabel({
           id={id}
           value={todoTitle}
           onChange={handleTitleChange}
+          onBlur={onBlur}
+          placeholder="Enter todo title..."
         />
       </div>
     </>
@@ -42,12 +45,13 @@ function InputWithLabel({
 
 // Define prop types for InputWithLabel component
 InputWithLabel.propTypes = {
-  isFocused: PropTypes.bool,
-  children: PropTypes.string,
-  type: PropTypes.string,
-  name: PropTypes.string,
-  id: PropTypes.string,
-  todoTitle: PropTypes.string,
-  handleTitleChange: PropTypes.func,
+  isFocused: PropTypes.bool.isRequired,
+  children: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  todoTitle: PropTypes.string.isRequired,
+  handleTitleChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
 };
 export default InputWithLabel;

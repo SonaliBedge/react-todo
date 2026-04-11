@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import AddTodoForm from "./AddTodoForm";
 import TodoList from "./TodoList";
 import "../App.css";
 import PropTypes from "prop-types";
-import { useLocation } from "react-router-dom";
 
 function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
   // Define state variables
@@ -11,25 +10,20 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
   const [isLoading, setIsLoading] = useState(true);
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortBy, setSortBy] = useState("Title");
-  const [showAddTodoForm, setShowAddTodoForm] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const errorTimerRef = useRef(null);
 
-  // Getting current location using React Router's useLocation hook
-  const location = useLocation();
+  // Show error message and auto-clear after 4 seconds
+  const showError = (message) => {
+    if (errorTimerRef.current) clearTimeout(errorTimerRef.current);
+    setErrorMessage(message);
+    errorTimerRef.current = setTimeout(() => setErrorMessage(null), 4000);
+  };
 
   // Fetch data from Airtable API when sortOrder or sortBy state variables change
   useEffect(() => {
     fetchData();
   }, [sortOrder, sortBy]);
-
-  // Show or hide AddTodoForm based on current location
-  useEffect(() => {
-    if (location.pathname === "/TodoContainer") {
-      setShowAddTodoForm(true);
-    } else {
-      setShowAddTodoForm(false);
-    }
-    
-  }, [location , showAddTodoForm]);
 
   // Fetch data from Airtable API
   const fetchData = async () => {
@@ -61,7 +55,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
       setTodoList(todos);
       setIsLoading(false);
     } catch (error) {
-      console.log(error.message);
+      showError("Failed to load todos. Please try again.");
       setIsLoading(false);
     }
   };
@@ -91,23 +85,23 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
       }
       const data = await response.json();
 
-      // Map new todo to addTodo state variable
-      const addTodo = {
+      // Map response to addedTodo
+      const addedTodo = {
         id: data.id,
         title: data.fields.Title,
         CompletedAt: data.fields.CompletedAt,
       };
 
       // Update todoList state variable
-      setTodoList((todoList) => {
-        const updatedList = [...todoList, addTodo];
+      setTodoList((prev) => {
+        const updatedList = [...prev, addedTodo];
         updatedList.sort((a, b) => {
           return new Date(a.CompletedAt) - new Date(b.CompletedAt);
         });
         return updatedList;
       });
     } catch (error) {
-      console.error("Error adding todo:", error.message);
+      showError("Failed to add todo. Please try again.");
     }
   };
 
@@ -119,6 +113,40 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
   // Update sortBy state variable
   const toggleSortBy = (sortByValue) => {
     setSortBy(sortByValue);
+  };
+
+  // Toggle complete status in Airtable API
+  const toggleComplete = async (id, isCompleted) => {
+    try {
+      const today = new Date().toISOString().split("T")[0];
+      const options = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tableAPIToken}`,
+        },
+        body: JSON.stringify({
+          fields: { CompletedAt: isCompleted ? null : today },
+        }),
+      };
+
+      const url = `https://api.airtable.com/v0/${tableBaseId}/${tableName}/${id}`;
+
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(`Error updating todo: ${response.status}`);
+      }
+
+      setTodoList((prev) =>
+        prev.map((todo) =>
+          todo.id === id
+            ? { ...todo, CompletedAt: isCompleted ? null : today }
+            : todo
+        )
+      );
+    } catch (error) {
+      showError("Failed to update todo. Please try again.");
+    }
   };
 
   // Update todo in Airtable API
@@ -148,7 +176,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
         )
       );
     } catch (error) {
-      console.error("Error updating todo:", error.message);
+      showError("Failed to edit todo. Please try again.");
     }
   };
 
@@ -171,9 +199,9 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
       }
 
       // Update todoList state by filtering out the removed todo
-      setTodoList(todoList.filter((todo) => id !== todo.id));
+      setTodoList((prev) => prev.filter((todo) => id !== todo.id));
     } catch (error) {
-      console.error("Error deleting todo:", error.message);
+      showError("Failed to delete todo. Please try again.");
     }
   };
 
@@ -182,8 +210,15 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
     <>
       {/* <h1>{tableName}</h1> */}
 
-      {/* Show AddTodoForm if showAddTodoForm state variable is true */}
-      {showAddTodoForm && <AddTodoForm addTodo={addTodo} />}
+      {/* Error banner */}
+      {errorMessage && (
+        <div className="errorBanner">
+          {errorMessage}
+          <button className="errorClose" onClick={() => setErrorMessage(null)}>✕</button>
+        </div>
+      )}
+
+      <AddTodoForm addTodo={addTodo} />
 
       {/* Show loading message if isLoading state variable is true */}
       {isLoading ? (
@@ -194,6 +229,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
             todoList={todoList}
             onRemoveTodo={removeTodo}
             onUpdateTodo={updateTodo}
+            onToggleComplete={toggleComplete}
             sortOrderValue={sortOrder}
             onChangeSortOrder={toggleSort}
             onChangeSortBy={toggleSortBy}
@@ -204,7 +240,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
 
       <div>
         <h5>Built by Sonali Bedge</h5>
-        <a href="mailto:bedgesonali@yahoo.com" target="_blank">
+        <a href="mailto:bedgesonali@yahoo.com" target="_blank" rel="noreferrer">
           <img
             width="40"
             height="40"
@@ -212,7 +248,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
             alt="secured-letter"
           />
         </a>
-        <a href="https://github.com/SonaliBedge" target="_blank">
+        <a href="https://github.com/SonaliBedge" target="_blank" rel="noreferrer">
           <img
             width="40"
             height="40"
@@ -223,6 +259,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
         <a
           href="https://www.linkedin.com/in/sonali-bedge-488a07155/"
           target="_blank"
+          rel="noreferrer"
         >
           <img
             width="40"
