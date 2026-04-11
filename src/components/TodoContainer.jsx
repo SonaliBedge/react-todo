@@ -50,17 +50,6 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
       }
       const data = await response.json();
 
-      // Sort data based on sortOrder and sortBy state variables
-      data.records.sort((objectA, objectB) => {
-        const fieldA = objectA.fields[sortBy];
-        const fieldB = objectB.fields[sortBy];
-        if (sortOrder === "asc") {
-          return fieldA.localeCompare(fieldB);
-        } else if (sortOrder === "desc") {
-          return fieldB.localeCompare(fieldA);
-        }
-      });
-
       // Map data to todoList state variable
       const todos = data.records.map((todo) => ({
         id: todo.id,
@@ -73,6 +62,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
       setIsLoading(false);
     } catch (error) {
       console.log(error.message);
+      setIsLoading(false);
     }
   };
 
@@ -131,6 +121,37 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
     setSortBy(sortByValue);
   };
 
+  // Update todo in Airtable API
+  const updateTodo = async (id, newTitle) => {
+    try {
+      const options = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tableAPIToken}`,
+        },
+        body: JSON.stringify({
+          fields: { Title: newTitle },
+        }),
+      };
+
+      const url = `https://api.airtable.com/v0/${tableBaseId}/${tableName}/${id}`;
+
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(`Error updating todo: ${response.status}`);
+      }
+
+      setTodoList((prev) =>
+        prev.map((todo) =>
+          todo.id === id ? { ...todo, title: newTitle } : todo
+        )
+      );
+    } catch (error) {
+      console.error("Error updating todo:", error.message);
+    }
+  };
+
   // Remove todo from Airtable API
   const removeTodo = async (id) => {
     try {
@@ -172,6 +193,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
           <TodoList
             todoList={todoList}
             onRemoveTodo={removeTodo}
+            onUpdateTodo={updateTodo}
             sortOrderValue={sortOrder}
             onChangeSortOrder={toggleSort}
             onChangeSortBy={toggleSortBy}

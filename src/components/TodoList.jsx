@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 function TodoList({
   todoList,
   onRemoveTodo,
+  onUpdateTodo,
   sortOrderValue,
   onChangeSortOrder,
   onChangeSortBy,
@@ -53,7 +54,7 @@ function TodoList({
       {/* Todo list */}
       <ul>
         {todoList.map((todo) => (
-          <TodoListItem key={todo.id} todo={todo} onRemoveTodo={onRemoveTodo} />
+          <TodoListItem key={todo.id} todo={todo} onRemoveTodo={onRemoveTodo} onUpdateTodo={onUpdateTodo} />
         ))}
       </ul>
     </div>
@@ -63,6 +64,7 @@ function TodoList({
 TodoList.propTypes = {
   todoList: PropTypes.array.isRequired,
   onRemoveTodo: PropTypes.func,
+  onUpdateTodo: PropTypes.func,
   onChangeSortOrder: PropTypes.func,
   onChangeSortBy: PropTypes.func,
   sortOrderValue: PropTypes.string.isRequired,

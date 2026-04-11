@@ -68,6 +68,57 @@
     border: none;
     border-top: 1px solid #ccc;
 }
+.actionButtons {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.editButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 2px 6px;
+}
+.editButton:hover {
+  transform: scale(1.2);
+}
+.editInputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+.editInput {
+  font-family: 'Patrick Hand', Inter, system-ui;
+  font-size: 18px;
+  padding: 3px 8px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  flex: 1;
+}
+.saveButton {
+  background-color: #2ecc71;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.saveButton:hover {
+  background-color: #27ae60;
+}
+.cancelButton {
+  background-color: #888;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.cancelButton:hover {
+  background-color: #666;
+}
 .TitleFont {
   font-size: 3.2em;
   line-height: 0.8;   
