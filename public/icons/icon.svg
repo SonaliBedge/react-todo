@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="90" fill="#5b6ba4"/>
+  <!-- Checkmark circle row 1 -->
+  <circle cx="110" cy="165" r="28" fill="white"/>
+  <polyline points="97,165 107,175 125,155" fill="none" stroke="#5b6ba4" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Line row 1 -->
+  <rect x="162" y="150" width="240" height="30" rx="15" fill="white"/>
+  <!-- Checkmark circle row 2 -->
+  <circle cx="110" cy="256" r="28" fill="white" opacity="0.85"/>
+  <polyline points="97,256 107,266 125,246" fill="none" stroke="#5b6ba4" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Line row 2 -->
+  <rect x="162" y="241" width="240" height="30" rx="15" fill="white" opacity="0.85"/>
+  <!-- Empty circle row 3 -->
+  <circle cx="110" cy="347" r="28" fill="none" stroke="white" stroke-width="5" opacity="0.6"/>
+  <!-- Line row 3 (shorter = incomplete) -->
+  <rect x="162" y="332" width="160" height="30" rx="15" fill="white" opacity="0.6"/>
+</svg>

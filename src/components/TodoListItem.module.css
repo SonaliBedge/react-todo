@@ -39,7 +39,9 @@
   color: var(--text-primary);
   font-family: 'Patrick Hand', Inter, system-ui;
   font-size: 20px;
-  width: 440px;
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
 }
 .ListLink:hover {
   color: var(--accent);
@@ -286,6 +288,9 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: 1;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 .actionButtons {
   display: flex;
@@ -349,39 +354,44 @@
   font-family: 'Patrick Hand', Inter, system-ui;
 }
 
-/* ── Unused legacy classes kept for safety ── */
-.toggleButton { display: none; }
-.FormText { color: #e74c3c; font-size: 20px; }
-
 /* ── Media queries ── */
-@media (max-width: 992px) {
-  .ListLink { width: 300px; }
-}
-
 @media (max-width: 758px) {
-  .ListContainer { flex-direction: column; }
   .FormLink {
     flex-direction: column;
     align-items: flex-start;
   }
-  .ListLink {
-    width: 150px;
-    margin-bottom: 10px;
+  .FormLink label { margin-bottom: 5px; }
+  .FormLink input {
+    width: 100%;
+    font-size: 18px;
+    padding: 6px 0;
   }
   .toggleSelect {
     margin-left: 0;
-    margin-top: 10px;
+    margin-top: 6px;
   }
-  .FormLink label { margin-bottom: 5px; }
+  .editInputWrapper {
+    flex-wrap: wrap;
+  }
+  .editInput {
+    width: 100%;
+    flex: unset;
+  }
 }
 
 @media (max-width: 576px) {
+  .Container {
+    padding: 16px;
+    border-radius: 8px;
+  }
+  .TitleFont { font-size: 1.8em; }
   .ListLink { font-size: 16px; }
   .ListButton {
-    font-size: 14px;
-    padding: 3px 6px;
+    font-size: 13px;
+    padding: 4px 8px;
   }
   .FormLink label { width: 80px; }
-  .FormLink input { font-size: 16px; }
   .actionButtons { visibility: visible; }
+  .sortControls { gap: 6px; }
+  .sortLabel { margin-left: 0; }
 }

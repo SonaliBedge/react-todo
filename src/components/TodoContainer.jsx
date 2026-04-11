@@ -4,7 +4,7 @@ import TodoList from "./TodoList";
 import "../App.css";
 import PropTypes from "prop-types";
 
-function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
+function TodoContainer({ tableName, tableAPIToken, tableBaseId, username }) {
   // Define state variables
   const [todoList, setTodoList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,10 +55,10 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
     return () => clearInterval(interval);
   }, [todoList, notifPermission]);
 
-  // Fetch data from Airtable API when sortOrder or sortBy state variables change
+  // Fetch data when sort or username changes
   useEffect(() => {
     fetchData();
-  }, [sortOrder, sortBy]);
+  }, [sortOrder, sortBy, username]);
 
   // Fetch data from Airtable API
   const fetchData = async () => {
@@ -69,7 +69,8 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
       },
     };
 
-    const url = `https://api.airtable.com/v0/${tableBaseId}/${tableName}?view=Grid%20view&sort[0][field]=${sortBy}&sort[0][direction]=${sortOrder}`;
+    const filter = encodeURIComponent(`{Username}="${username}"`);
+    const url = `https://api.airtable.com/v0/${tableBaseId}/${tableName}?view=Grid%20view&sort[0][field]=${sortBy}&sort[0][direction]=${sortOrder}&filterByFormula=${filter}`;
 
     try {
       const response = await fetch(url, options);
@@ -112,6 +113,7 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId }) {
             CompletedAt: newTodo.CompletedAt,
             Priority: newTodo.Priority,
             Deadline: newTodo.Deadline || null,
+            Username: username,
           },
         }),
       };
@@ -327,5 +329,6 @@ TodoContainer.propTypes = {
   tableName: PropTypes.string.isRequired,
   tableBaseId: PropTypes.string.isRequired,
   tableAPIToken: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
 };
 export default TodoContainer;

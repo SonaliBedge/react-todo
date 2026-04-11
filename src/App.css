@@ -5,6 +5,66 @@
   text-align: center;
 }
 
+@media (max-width: 576px) {
+  #root { padding: 1rem; }
+}
+
+/* ── Floating background blobs ── */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: -1;
+  will-change: transform;
+}
+
+.blob1 {
+  width: 520px;
+  height: 520px;
+  background: var(--blob1-color);
+  top: -140px;
+  left: -120px;
+  animation: floatBlob1 20s ease-in-out infinite;
+}
+
+.blob2 {
+  width: 440px;
+  height: 440px;
+  background: var(--blob2-color);
+  bottom: -80px;
+  right: -100px;
+  animation: floatBlob2 26s ease-in-out infinite;
+}
+
+.blob3 {
+  width: 360px;
+  height: 360px;
+  background: var(--blob3-color);
+  top: 45%;
+  left: 35%;
+  animation: floatBlob3 18s ease-in-out infinite;
+}
+
+@keyframes floatBlob1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%       { transform: translate(50px, 40px) scale(1.05); }
+  50%       { transform: translate(25px, -30px) scale(0.97); }
+  75%       { transform: translate(-35px, 25px) scale(1.03); }
+}
+
+@keyframes floatBlob2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(-55px, -40px) scale(1.07); }
+  66%       { transform: translate(35px, -50px) scale(0.95); }
+}
+
+@keyframes floatBlob3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%       { transform: translate(-45px, 35px) scale(1.1); }
+  80%       { transform: translate(40px, -25px) scale(0.93); }
+}
+
 
 .errorBanner {
   display: flex;
@@ -27,6 +87,36 @@
   cursor: pointer;
   padding: 0 4px;
 }
+.userBadge {
+  position: fixed;
+  top: 16px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 100;
+  background: var(--container-bg);
+  padding: 6px 12px;
+  border-radius: 20px;
+  box-shadow: var(--container-shadow);
+  font-family: 'Patrick Hand', Inter, system-ui;
+}
+.userBadgeName {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+.userBadgeChange {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  line-height: 1;
+}
+.userBadgeChange:hover {
+  transform: scale(1.2);
+}
+
 .notifBanner {
   display: flex;
   justify-content: space-between;

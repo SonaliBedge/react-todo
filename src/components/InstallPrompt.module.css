@@ -1,0 +1,91 @@
+.banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--container-bg);
+  border: 1.5px solid var(--border-color);
+  box-shadow: var(--container-shadow);
+  border-radius: 16px;
+  padding: 12px 18px;
+  z-index: 150;
+  font-family: 'Patrick Hand', Inter, system-ui;
+  max-width: 420px;
+  width: calc(100% - 40px);
+  flex-wrap: wrap;
+}
+
+.icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.text {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-primary);
+  min-width: 120px;
+}
+
+.installBtn {
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-family: 'Patrick Hand', Inter, system-ui;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.installBtn:hover {
+  background-color: var(--accent-hover);
+}
+
+.learnBtn {
+  background: none;
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-family: 'Patrick Hand', Inter, system-ui;
+  font-size: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.learnBtn:hover {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+.dismissBtn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 2px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.dismissBtn:hover {
+  color: var(--text-primary);
+}
+
+.iosGuide {
+  width: 100%;
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: var(--input-bg);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-top: 4px;
+  line-height: 1.5;
+}
