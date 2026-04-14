@@ -9,7 +9,7 @@ function AddTodoForm({ addTodo }) {
   // Define state variables
   const [todoTitle, setTodoTitle] = React.useState("");
   const [touched, setTouched] = React.useState(false);
-  const [priority, setPriority] = React.useState("Medium");
+  const [priority, setPriority] = React.useState("Priority 3");
   const [deadline, setDeadline] = React.useState(new Date().toISOString().split("T")[0]);
 
   // Handle changes to todoTitle state variable
@@ -30,7 +30,7 @@ function AddTodoForm({ addTodo }) {
       };
       addTodo(newTodo);
       setTodoTitle("");
-      setPriority("Medium");
+      setPriority("Priority 3");
       setDeadline(new Date().toISOString().split("T")[0]);
       setTouched(false);
     }
@@ -73,9 +73,11 @@ function AddTodoForm({ addTodo }) {
               onChange={(e) => setPriority(e.target.value)}
               className={style.toggleSelect}
             >
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
+              <option value="Priority 1">Priority 1</option>
+              <option value="Priority 2">Priority 2</option>
+              <option value="Priority 3">Priority 3</option>
+              <option value="Priority 4">Priority 4</option>
+              <option value="Priority 5">Priority 5</option>
             </select>
           </div>
 

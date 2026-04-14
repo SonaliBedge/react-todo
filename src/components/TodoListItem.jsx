@@ -1,7 +1,16 @@
-// Added "Remove" and "Edit" buttons to List Items
 import { useState } from "react";
 import PropTypes from "prop-types";
 import style from "./TodoListItem.module.css";
+
+const PRIORITIES = ["Priority 1", "Priority 2", "Priority 3", "Priority 4", "Priority 5"];
+
+const PRIORITY_STYLE = {
+  "Priority 1": style.priority1,
+  "Priority 2": style.priority2,
+  "Priority 3": style.priority3,
+  "Priority 4": style.priority4,
+  "Priority 5": style.priority5,
+};
 
 function TodoListItem({ todo, onRemoveTodo, onUpdateTodo, onToggleComplete }) {
   const { title, CompletedAt, Priority, Deadline } = todo;
@@ -17,7 +26,7 @@ function TodoListItem({ todo, onRemoveTodo, onUpdateTodo, onToggleComplete }) {
 
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(title);
-  const [editPriority, setEditPriority] = useState(Priority || "Medium");
+  const [editPriority, setEditPriority] = useState(Priority || "Priority 3");
   const [editDeadline, setEditDeadline] = useState(Deadline || "");
 
   const handleRemoveTodo = () => {
@@ -28,7 +37,7 @@ function TodoListItem({ todo, onRemoveTodo, onUpdateTodo, onToggleComplete }) {
 
   const handleEditClick = () => {
     setEditTitle(title);
-    setEditPriority(Priority || "Medium");
+    setEditPriority(Priority || "Priority 3");
     setEditDeadline(Deadline || "");
     setIsEditing(true);
   };
@@ -52,7 +61,7 @@ function TodoListItem({ todo, onRemoveTodo, onUpdateTodo, onToggleComplete }) {
 
   const handleCancel = () => {
     setEditTitle(title);
-    setEditPriority(Priority || "Medium");
+    setEditPriority(Priority || "Priority 3");
     setEditDeadline(Deadline || "");
     setIsEditing(false);
   };
@@ -76,9 +85,9 @@ function TodoListItem({ todo, onRemoveTodo, onUpdateTodo, onToggleComplete }) {
               value={editPriority}
               onChange={(e) => setEditPriority(e.target.value)}
             >
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
+              {PRIORITIES.map((p) => (
+                <option key={p} value={p}>{p}</option>
+              ))}
             </select>
             <input
               type="date"
@@ -103,18 +112,24 @@ function TodoListItem({ todo, onRemoveTodo, onUpdateTodo, onToggleComplete }) {
               onChange={() => onToggleComplete(todo.id, isCompleted)}
               aria-label={`Mark "${title}" as ${isCompleted ? "incomplete" : "complete"}`}
             />
-            {Priority && (
-              <span className={`${style.priorityBadge} ${style[`priority${Priority}`]}`}>
-                {Priority}
+            <span className={style.todoContent}>
+              <span className={`${style.ListLink} ${isCompleted ? style.completed : ""}`}>
+                {title}
               </span>
-            )}
-            {Deadline && (
-              <span className={`${style.deadlineBadge} ${getDeadlineStyle(Deadline)}`}>
-                📅 {Deadline}
-              </span>
-            )}
-            <span className={`${style.ListLink} ${isCompleted ? style.completed : ""}`}>
-              {title}
+              {(Priority || Deadline) && (
+                <span className={style.badgeRow}>
+                  {Priority && (
+                    <span className={`${style.priorityBadge} ${PRIORITY_STYLE[Priority] || ""}`}>
+                      {Priority}
+                    </span>
+                  )}
+                  {Deadline && (
+                    <span className={`${style.deadlineBadge} ${getDeadlineStyle(Deadline)}`}>
+                      📅 {Deadline}
+                    </span>
+                  )}
+                </span>
+              )}
             </span>
           </span>
         )}
@@ -154,7 +169,7 @@ TodoListItem.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     CompletedAt: PropTypes.string,
-    Priority: PropTypes.oneOf(["High", "Medium", "Low"]),
+    Priority: PropTypes.oneOf(["Priority 1", "Priority 2", "Priority 3", "Priority 4", "Priority 5"]),
     Deadline: PropTypes.string,
   }).isRequired,
   onRemoveTodo: PropTypes.func.isRequired,

@@ -122,6 +122,8 @@ function TodoContainer({ tableName, tableAPIToken, tableBaseId, username }) {
 
       const response = await fetch(url, options);
       if (!response.ok) {
+        const errorBody = await response.json().catch(() => ({}));
+        console.error("Airtable error:", errorBody);
         throw new Error(`Error adding todo: ${response.status}`);
       }
       const data = await response.json();

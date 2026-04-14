@@ -16,7 +16,6 @@ function TodoList({
   sortByValue,
 }) {
   const [activeFilter, setActiveFilter] = useState("All");
-  const [priorityFilter, setPriorityFilter] = useState("All");
 
   // Handle change to sort order
   const handleSortChange = (event) => {
@@ -28,17 +27,12 @@ function TodoList({
     onChangeSortBy(event.target.value);
   };
 
-  // Filter list based on active filter and priority filter
-  const filteredList = todoList
-    .filter((todo) => {
-      if (activeFilter === "Active") return !todo.CompletedAt;
-      if (activeFilter === "Completed") return !!todo.CompletedAt;
-      return true;
-    })
-    .filter((todo) => {
-      if (priorityFilter === "All") return true;
-      return todo.Priority === priorityFilter;
-    });
+  // Filter list based on active filter
+  const filteredList = todoList.filter((todo) => {
+    if (activeFilter === "Active") return !todo.CompletedAt;
+    if (activeFilter === "Completed") return !!todo.CompletedAt;
+    return true;
+  });
 
   const emptyMessages = {
     All: "No todos yet — add one!",
@@ -95,19 +89,7 @@ function TodoList({
           <option value="" disabled>Sort By Field</option>
           <option value="Title">Title</option>
           <option value="CompletedAt">Created Date</option>
-        </select>
-
-        <label htmlFor="priorityFilter" className={style.sortLabel}>Priority:</label>
-        <select
-          id="priorityFilter"
-          value={priorityFilter}
-          onChange={(e) => setPriorityFilter(e.target.value)}
-          className={style.toggleSelect}
-        >
-          <option value="All">All</option>
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
+          <option value="Priority">Priority</option>
         </select>
       </div>
 
@@ -132,7 +114,7 @@ TodoList.propTypes = {
       id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       CompletedAt: PropTypes.string,
-      Priority: PropTypes.oneOf(["High", "Medium", "Low"]),
+      Priority: PropTypes.oneOf(["Priority 1", "Priority 2", "Priority 3", "Priority 4", "Priority 5"]),
       Deadline: PropTypes.string,
     })
   ).isRequired,

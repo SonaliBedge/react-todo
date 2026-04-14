@@ -24,15 +24,11 @@
   --hr-color: #e0e0e0;
   --input-bg: #f9f9f9;
   --select-bg: #fff;
-  --badge-high-bg: #fdecea;
-  --badge-high-color: #c0392b;
-  --badge-high-border: #e74c3c;
-  --badge-med-bg: #fef9e7;
-  --badge-med-color: #d68910;
-  --badge-med-border: #f39c12;
-  --badge-low-bg: #eafaf1;
-  --badge-low-color: #1e8449;
-  --badge-low-border: #27ae60;
+  --badge-p1-bg: #fdecea; --badge-p1-color: #c0392b; --badge-p1-border: #e74c3c;
+  --badge-p2-bg: #fef0e7; --badge-p2-color: #d35400; --badge-p2-border: #e67e22;
+  --badge-p3-bg: #fef9e7; --badge-p3-color: #d68910; --badge-p3-border: #f39c12;
+  --badge-p4-bg: #e8f6f3; --badge-p4-color: #148f77; --badge-p4-border: #1abc9c;
+  --badge-p5-bg: #eafaf1; --badge-p5-color: #1e8449; --badge-p5-border: #27ae60;
 }
 
 /* Dark mode token overrides */
@@ -53,15 +49,11 @@ body.dark {
   --hr-color: #2d3548;
   --input-bg: #252d3d;
   --select-bg: #252d3d;
-  --badge-high-bg: #3d1f1f;
-  --badge-high-color: #e88080;
-  --badge-high-border: #8b3333;
-  --badge-med-bg: #3d3220;
-  --badge-med-color: #e8c070;
-  --badge-med-border: #8b6820;
-  --badge-low-bg: #1f3d2a;
-  --badge-low-color: #70c48a;
-  --badge-low-border: #2a8b4a;
+  --badge-p1-bg: #3d1f1f; --badge-p1-color: #e88080; --badge-p1-border: #8b3333;
+  --badge-p2-bg: #3d2a1a; --badge-p2-color: #e8a070; --badge-p2-border: #8b5020;
+  --badge-p3-bg: #3d3220; --badge-p3-color: #e8c070; --badge-p3-border: #8b6820;
+  --badge-p4-bg: #1a3a35; --badge-p4-color: #60c4b0; --badge-p4-border: #208b78;
+  --badge-p5-bg: #1f3d2a; --badge-p5-color: #70c48a; --badge-p5-border: #2a8b4a;
 }
 
 a {

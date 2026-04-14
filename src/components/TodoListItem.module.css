@@ -62,20 +62,30 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-.priorityHigh {
-  background-color: var(--badge-high-bg);
-  color: var(--badge-high-color);
-  border: 1px solid var(--badge-high-border);
+.priority1 {
+  background-color: var(--badge-p1-bg);
+  color: var(--badge-p1-color);
+  border: 1px solid var(--badge-p1-border);
 }
-.priorityMedium {
-  background-color: var(--badge-med-bg);
-  color: var(--badge-med-color);
-  border: 1px solid var(--badge-med-border);
+.priority2 {
+  background-color: var(--badge-p2-bg);
+  color: var(--badge-p2-color);
+  border: 1px solid var(--badge-p2-border);
 }
-.priorityLow {
-  background-color: var(--badge-low-bg);
-  color: var(--badge-low-color);
-  border: 1px solid var(--badge-low-border);
+.priority3 {
+  background-color: var(--badge-p3-bg);
+  color: var(--badge-p3-color);
+  border: 1px solid var(--badge-p3-border);
+}
+.priority4 {
+  background-color: var(--badge-p4-bg);
+  color: var(--badge-p4-color);
+  border: 1px solid var(--badge-p4-border);
+}
+.priority5 {
+  background-color: var(--badge-p5-bg);
+  color: var(--badge-p5-color);
+  border: 1px solid var(--badge-p5-border);
 }
 
 /* ── Deadline badge ── */
@@ -87,19 +97,19 @@
   white-space: nowrap;
 }
 .deadlineOverdue {
-  background-color: var(--badge-high-bg);
-  color: var(--badge-high-color);
-  border: 1px solid var(--badge-high-border);
+  background-color: var(--badge-p1-bg);
+  color: var(--badge-p1-color);
+  border: 1px solid var(--badge-p1-border);
 }
 .deadlineToday {
-  background-color: var(--badge-med-bg);
-  color: var(--badge-med-color);
-  border: 1px solid var(--badge-med-border);
+  background-color: var(--badge-p3-bg);
+  color: var(--badge-p3-color);
+  border: 1px solid var(--badge-p3-border);
 }
 .deadlineUpcoming {
-  background-color: var(--badge-low-bg);
-  color: var(--badge-low-color);
-  border: 1px solid var(--badge-low-border);
+  background-color: var(--badge-p5-bg);
+  color: var(--badge-p5-color);
+  border: 1px solid var(--badge-p5-border);
 }
 
 /* ── Priority / Deadline row in form ── */
@@ -289,8 +299,21 @@
   align-items: center;
   gap: 10px;
   flex: 1;
-  flex-wrap: wrap;
   min-width: 0;
+}
+.todoContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  gap: 4px;
+}
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-end;
 }
 .actionButtons {
   display: flex;
